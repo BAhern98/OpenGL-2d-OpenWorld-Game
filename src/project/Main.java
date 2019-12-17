@@ -11,7 +11,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import collision.AABB;
+import entity.Entity;
 import entity.Player;
+import entity.Transform;
 import world.Tile;
 import world.TileRenderer;
 
@@ -42,6 +44,8 @@ public class Main {
 		glEnable(GL_TEXTURE_2D);
 
 		TileRenderer tiles = new TileRenderer();
+Entity.IntiAsset();//initialise entity asset
+
 
 //	float[] vertices = new float[] {
 //		-0.5f, 0.5f, 0,   //top left 0
@@ -74,7 +78,7 @@ public class Main {
 		World world = new World("test_level");
 		
 		
-		Player player = new Player();
+		Player player = new Player(new Transform());
 
 //		world.setTile(Tile.test2, 7, 1);
 //		world.setTile(Tile.test2, 7, 2);
@@ -132,12 +136,13 @@ public class Main {
 				// tex.bind(0);
 
 				world.render(tiles, shader, camera, window);
-				player.render(shader, camera);
+				player.render(shader, camera, world);
 				window.swapBuffers();
 				frames++;
 			}
 
 		}
+		Entity.DelAsset();// destroys entity asset
 		glfwTerminate();
 
 	}

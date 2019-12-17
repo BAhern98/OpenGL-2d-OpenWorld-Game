@@ -77,6 +77,9 @@ public class World {
 		world = new Matrix4f().setTranslation(new Vector3f(0));
 		world.scale(scale);
 	}
+	public Matrix4f getWorldMatrix() {
+		return world;
+		}
 
 	public void render(TileRenderer render, Shader shader, Camera cam, Window window) {
 
