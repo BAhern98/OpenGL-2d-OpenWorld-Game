@@ -31,31 +31,14 @@ public class Entity {
 
 		bounding_box = new AABB(new Vector2f(transform.pos.x, transform.pos.y), new Vector2f(transform.scale.x,transform.scale.y));
 	}
+	public void move(Vector2f direction) {
+		transform.pos.add(new Vector3f(direction, 0));
+		bounding_box.getCenter().set(transform.pos.x, transform.pos.y);// updates center of bounding box
+	}
 
 	public void update(float delta, Window window, Camera camera, World world) {
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_A))
-			transform.pos.add(new Vector3f(-20 * delta, 0, 0));
-
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_D))
-			transform.pos.add(new Vector3f(20 * delta, 0, 0));
-
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_W))
-			transform.pos.add(new Vector3f(0, 20 * delta, 0));
-
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_S))
-			transform.pos.add(new Vector3f(0, -20 * delta, 0));
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_LEFT))
-			transform.pos.add(new Vector3f(-20 * delta, 0, 0));
-
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_RIGHT))
-			transform.pos.add(new Vector3f(20 * delta, 0, 0));
-
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_UP))
-			transform.pos.add(new Vector3f(0, 20 * delta, 0));
-
-		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_DOWN))
-			transform.pos.add(new Vector3f(0, -20 * delta, 0));
-		bounding_box.getCenter().set(transform.pos.x, transform.pos.y);// updates center of bounding box
+		
+		
 
 		AABB[] boxes = new AABB[25];
 
