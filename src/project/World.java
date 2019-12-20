@@ -16,6 +16,7 @@ import collision.AABB;
 import entity.Entity;
 import entity.Player;
 import entity.Transform;
+import player.Animations;
 import world.Tile;
 import world.TileRenderer;
 
@@ -73,6 +74,16 @@ public class World {
 		//TODO
 		entities.add(new Player(new Transform()));//add entity player
 		
+		Transform t = new Transform();
+		t.pos.x = 0;
+		t.pos.y = -4;
+		entities.add(new Entity(new Animations(1,1,"image"),t) {
+			@Override
+			public void update(float delta, Window window, Camera camera, World world) {
+					move(new Vector2f(5*delta, 0));
+			
+			}
+		});//add entity 
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
@@ -118,6 +129,10 @@ public class World {
 	public void update(float delta, Window window, Camera camera) {
 		for(Entity entity : entities) {//itaarate through all the entities in list of entities
 			entity.update(delta, window, camera, this);//update each entity 
+		}
+		
+		for(int i = 0; i< entities.size(); i++) {
+			entities.get(i).collideWithTiles(this);//get entity at i and collide with tiles this
 		}
 	}
 

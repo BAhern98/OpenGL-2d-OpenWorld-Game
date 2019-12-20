@@ -15,7 +15,7 @@ import project.Texture;
 import project.Window;
 import project.World;
 
-public class Entity {    
+public abstract class Entity {    
 	private static Model model;
 	protected AABB bounding_box;
 	// private Texture texture ;
@@ -38,13 +38,8 @@ public class Entity {
 		bounding_box.getCenter().set(transform.pos.x, transform.pos.y);// updates center of bounding box
 	}
 
-	public void update(float delta, Window window, Camera camera, World world) {
+	public abstract void update(float delta, Window window, Camera camera, World world) ;
 		
-		collideWithTiles(world);//calls method
-
-		// camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
-	}
-	
 	public void collideWithTiles(World world) {//put in new method because we want the world to handle every entity
 
 		AABB[] boxes = new AABB[25];
