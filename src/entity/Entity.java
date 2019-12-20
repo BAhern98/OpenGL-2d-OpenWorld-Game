@@ -15,13 +15,15 @@ import project.Texture;
 import project.Window;
 import project.World;
 
-public class Entity {
+public class Entity {    
 	private static Model model;
-	private AABB bounding_box;
+	protected AABB bounding_box;
 	// private Texture texture ;
-	private Transform transform;
-	private Animations texture;
-
+	protected Transform transform;
+	protected Animations texture;
+	//
+	//changed to protected so any child class will have access to that
+	//
 	public Entity(Animations animation, Transform transform) {
 		
 
@@ -38,7 +40,12 @@ public class Entity {
 
 	public void update(float delta, Window window, Camera camera, World world) {
 		
-		
+		collideWithTiles(world);//calls method
+
+		// camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
+	}
+	
+	public void collideWithTiles(World world) {//put in new method because we want the world to handle every entity
 
 		AABB[] boxes = new AABB[25];
 
@@ -105,8 +112,6 @@ public class Entity {
 			}
 
 		}
-		camera.getPosition().lerp(transform.pos.mul(-world.getScale(), new Vector3f()), 0.05f);
-		// camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
 	}
 
 	public void render(Shader shader, Camera camera, World world) {

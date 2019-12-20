@@ -16,11 +16,11 @@ import project.World;
 import entity.Entity;
 
 public class Player extends Entity {
-	private Model model;
-	private AABB bounding_box;
-	// private Texture texture ;
-	private Transform transform;
-	private Animations texture;
+//	private Model model;
+//	protected AABB bounding_box;
+//	// private Texture texture ;
+//	protected Transform transform;
+//	protected Animations texture;
 
 	public Player(Transform transform) {
 		super(new Animations(5,15,"image"),transform);
@@ -56,6 +56,8 @@ public class Player extends Entity {
 		move(movement);
 		
 		super.update(delta, window, camera, world);
+		camera.getPosition().lerp(transform.pos.mul(-world.getScale(), new Vector3f()), 0.05f);
+
 		
 	}
 }

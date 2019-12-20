@@ -78,8 +78,12 @@ Entity.IntiAsset();//initialise entity asset
 		World world = new World("test_level");
 		
 		
-		Player player = new Player(new Transform());
-
+	
+//		
+//		Transform t = new Transform();
+//		t.scale.x = 1;
+//		t.scale.y = 1;
+//		Player player = new Player(t);
 //		world.setTile(Tile.test2, 7, 1);
 //		world.setTile(Tile.test2, 7, 2);
 //		
@@ -111,7 +115,7 @@ Entity.IntiAsset();//initialise entity asset
 
 				}
 				
-				player.update((float) frame_cap, window, camera, world);
+				world.update((float) frame_cap, window, camera);
 				world.correctCamera(camera, window);
 
 				window.update();
@@ -136,7 +140,7 @@ Entity.IntiAsset();//initialise entity asset
 				// tex.bind(0);
 
 				world.render(tiles, shader, camera, window);
-				player.render(shader, camera, world);
+				//player.render(shader, camera, world);
 				window.swapBuffers();
 				frames++;
 			}

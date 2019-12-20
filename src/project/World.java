@@ -3,6 +3,8 @@ package project;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -11,11 +13,14 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import collision.AABB;
+import entity.Entity;
+import entity.Player;
+import entity.Transform;
 import world.Tile;
 import world.TileRenderer;
 
 public class World {
-
+	private List<Entity> entities;
 	private byte[] tiles;
 	private int width;
 	private int height;
@@ -39,6 +44,12 @@ public class World {
 			int[] colorTileSheet = tile_sheet.getRGB(0, 0, width, height, null, 0, width);//returns all pixels within image,Returns an array of integer pixels in the default RGB color model (TYPE_INT_ARGB) and default sRGB color space, from a portion of the image data.
 		tiles = new byte[width * height];//inalise tiles
 		bounding_boxes = new AABB[width * height];//initalise boundig boxes
+		entities = new ArrayList<Entity>();//initialise list to new arraw list
+		
+		
+		
+		
+		
 		
 		for(int y = 0; y<height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -57,6 +68,10 @@ public class World {
 					
 			}
 		}
+		
+		
+		//TODO
+		entities.add(new Player(new Transform()));//add entity player
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +109,16 @@ public class World {
 
 			}
 		}
+		
+		for(Entity entity : entities) {//itaarate through all the entities in list of entities
+			entity.render(shader, cam, this);//render each entity 
+		}
 
+	}
+	public void update(float delta, Window window, Camera camera) {
+		for(Entity entity : entities) {//itaarate through all the entities in list of entities
+			entity.update(delta, window, camera, this);//update each entity 
+		}
 	}
 
 	public void correctCamera(Camera camera, Window window) {
