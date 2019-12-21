@@ -133,6 +133,12 @@ public class World {
 		
 		for(int i = 0; i< entities.size(); i++) {
 			entities.get(i).collideWithTiles(this);//get entity at i and collide with tiles this
+		
+			for (int j = i+1; j < entities.size(); j++) {//where we colide with other entities
+			 entities.get(i).collideWithEntity(entities.get(j));
+		
+			}
+			entities.get(1).collideWithTiles(this);// where we coliede with tiles again, if you colide with an enttiy and it pushes you into a tile it checks it
 		}
 	}
 

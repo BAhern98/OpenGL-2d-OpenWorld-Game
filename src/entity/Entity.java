@@ -15,32 +15,33 @@ import project.Texture;
 import project.Window;
 import project.World;
 
-public abstract class Entity {    
+public abstract class Entity {
 	private static Model model;
 	protected AABB bounding_box;
 	// private Texture texture ;
 	protected Transform transform;
 	protected Animations texture;
+
 	//
-	//changed to protected so any child class will have access to that
+	// changed to protected so any child class will have access to that
 	//
 	public Entity(Animations animation, Transform transform) {
-		
 
 		this.texture = animation;
 		this.transform = transform;
-	
 
-		bounding_box = new AABB(new Vector2f(transform.pos.x, transform.pos.y), new Vector2f(transform.scale.x,transform.scale.y));
+		bounding_box = new AABB(new Vector2f(transform.pos.x, transform.pos.y),
+				new Vector2f(transform.scale.x, transform.scale.y));
 	}
+
 	public void move(Vector2f direction) {
 		transform.pos.add(new Vector3f(direction, 0));
 		bounding_box.getCenter().set(transform.pos.x, transform.pos.y);// updates center of bounding box
 	}
 
-	public abstract void update(float delta, Window window, Camera camera, World world) ;
-		
-	public void collideWithTiles(World world) {//put in new method because we want the world to handle every entity
+	public abstract void update(float delta, Window window, Camera camera, World world);
+
+	public void collideWithTiles(World world) {// put in new method because we want the world to handle every entity
 
 		AABB[] boxes = new AABB[25];
 
@@ -110,16 +111,16 @@ public abstract class Entity {
 	}
 
 	public void render(Shader shader, Camera camera, World world) {
-		 Matrix4f target = camera.getprojection();
-		 target.mul(world.getWorldMatrix());
+		Matrix4f target = camera.getprojection();
+		target.mul(world.getWorldMatrix());
 		shader.bind();
 		shader.setUniform("sampler", 0);
 		shader.setUniform("projection", transform.getProjection(target));
 		texture.bind(0);
 		model.render();
 	}
-	
-	public static void IntiAsset() {//initialise the model
+
+	public static void IntiAsset() {// initialise the model
 		float[] vertices = new float[] { -1f, 1f, 0, // top left 0
 				1f, 1f, 0, // top right 1
 				1f, -1f, 0, // bottom right 2
@@ -135,20 +136,36 @@ public abstract class Entity {
 
 		model = new Model(vertices, texture, indices);
 	}
-public static void DelAsset() {// get rid of model
-	float[] vertices = new float[] { -1f, 1f, 0, // top left 0
-			1f, 1f, 0, // top right 1
-			1f, -1f, 0, // bottom right 2
-			-1f, -1f, 0,// bottom left 3
 
-	};
+	public static void DelAsset() {// get rid of model
+		float[] vertices = new float[] { -1f, 1f, 0, // top left 0
+				1f, 1f, 0, // top right 1
+				1f, -1f, 0, // bottom right 2
+				-1f, -1f, 0,// bottom left 3
 
-	float[] texture = new float[] { 0, 0, 1, 0, 1, 1, 0, 1,
+		};
 
-	};
+		float[] texture = new float[] { 0, 0, 1, 0, 1, 1, 0, 1,
 
-	int[] indices = new int[] { 0, 1, 2, 2, 3, 0, };
+		};
 
-	model = new Model(vertices, texture, indices);
+		int[] indices = new int[] { 0, 1, 2, 2, 3, 0, };
+
+		model = new Model(vertices, texture, indices);
+	}
+
+	public void collideWithEntity(Entity entity) {// method for coliding with just entites
+		Collision collision = bounding_box.getCollision(entity.bounding_box);// get all data so we can colide with the entity
+																				
+		if (collision.isIntersecting) { // test if it is intersecting
+			collision.distance.x/=2;//leaves smaller gap when moving entity objects
+			collision.distance.y/=2;
+			
+			bounding_box.correctPosition(entity.bounding_box, collision);// correct the position
+			transform.pos.set(bounding_box.getCenter().x, bounding_box.getCenter().y, 0);// setting the transform
+		
+			entity.bounding_box.correctPosition(bounding_box, collision);//corect entities bounding box with our bounding box
+			entity.transform.pos.set(entity.bounding_box.getCenter().x, entity.bounding_box.getCenter().y, 0);//set its transformation position
+		}
 	}
 }
