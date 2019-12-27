@@ -74,16 +74,7 @@ public class World {
 		//TODO
 		entities.add(new Player(new Transform()));//add entity player
 		
-		Transform t = new Transform();
-		t.pos.x = 0;
-		t.pos.y = -4;
-		entities.add(new Entity(new Animations(1,1,"image"),t) {
-			@Override
-			public void update(float delta, Window window, Camera camera, World world) {
-					move(new Vector2f(5*delta, 0));
-			
-			}
-		});//add entity 
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
@@ -138,7 +129,7 @@ public class World {
 			 entities.get(i).collideWithEntity(entities.get(j));
 		
 			}
-			entities.get(1).collideWithTiles(this);// where we coliede with tiles again, if you colide with an enttiy and it pushes you into a tile it checks it
+			entities.get(i).collideWithTiles(this);// where we coliede with tiles again, if you colide with an enttiy and it pushes you into a tile it checks it
 		}
 	}
 

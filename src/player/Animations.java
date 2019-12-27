@@ -27,7 +27,7 @@ public class Animations {
 		
 		this.frames = new Texture[amount];
 		for(int i = 0; i < amount ; i++) {
-			this.frames[i] = new Texture("/animation/"+filename + "_" + i + ".png");
+			this.frames[i] = new Texture(filename + "/" + i + ".png");//can fin animation in different folders
 		}
 			
 	}
@@ -40,7 +40,7 @@ public class Animations {
 		this.elapsedTime += currentTime - lastTime;
 		
 		if(elapsedTime>=fps) {
-			elapsedTime -= fps;
+			elapsedTime = 0;//wont speed up to get where it needs to go
 			pointer++;
 		}
 		

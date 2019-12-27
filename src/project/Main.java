@@ -39,6 +39,9 @@ public class Main {
 		window.createWindow("game");
 
 		GL.createCapabilities();
+		
+		glEnable(GL_BLEND);//ENABLE BLEND
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);//TELL OPENGL WHAT WE WANT  BLENDED, BLENDS ALPHA WITH COLOURS
 
 		Camera camera = new Camera(window.getWidth(), window.getHeight());// take in height and width of window
 		glEnable(GL_TEXTURE_2D);
