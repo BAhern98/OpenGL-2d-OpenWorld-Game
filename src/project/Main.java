@@ -38,7 +38,7 @@ public class Main {
 		window.setFullscreen(false);
 		window.createWindow("game");
 
-		GL.createCapabilities();
+		GL.createCapabilities();//creates a context,image that is on graphics card that opengl draws on
 		
 		glEnable(GL_BLEND);//ENABLE BLEND
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);//TELL OPENGL WHAT WE WANT  BLENDED, BLENDS ALPHA WITH COLOURS
@@ -133,7 +133,7 @@ Entity.IntiAsset();//initialise entity asset
 
 			if (can_render) {
 
-				glClear(GL_COLOR_BUFFER_BIT);
+				glClear(GL_COLOR_BUFFER_BIT);//clears context
 
 //				
 //				shader.bind();
@@ -144,13 +144,13 @@ Entity.IntiAsset();//initialise entity asset
 
 				world.render(tiles, shader, camera, window);
 				//player.render(shader, camera, world);
-				window.swapBuffers();
+				window.swapBuffers();//swaps 2 contexts 
 				frames++;
 			}
 
 		}
 		Entity.DelAsset();// destroys entity asset
-		glfwTerminate();
+		glfwTerminate();//cleans up data
 
 	}
 
