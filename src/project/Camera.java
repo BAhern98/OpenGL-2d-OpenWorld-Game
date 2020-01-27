@@ -9,9 +9,13 @@ public class Camera {
 
 	public Camera(int width, int height) {
 		
-		position = new Vector3f(0,0,0);
-		projection = new  Matrix4f().setOrtho2D(-width/2, width/2, -height/2, height/2);//center of window
+		position = new Vector3f(0,0,0);//gets x y z coords
+		projection = new  Matrix4f().setOrtho2D(-width/2, width/2, -height/2, height/2);//center of window, setortho2d makes 1 matrix
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Vector3f getPosition() {
+		return position;
 	}
 
 	public void setPosition(Vector3f position) {
@@ -22,13 +26,11 @@ public class Camera {
 		this.position.add(position);
 	}
 	
-	public Vector3f getPosition() {
-		return position;
-	}
+
 	
-	public Matrix4f getprojection() {
+	public Matrix4f getprojection() {//view matrix
 		
 		
-		return projection.translate(position, new Matrix4f());
+		return projection.translate(position, new Matrix4f());//allocates new target and position
 	}
 }

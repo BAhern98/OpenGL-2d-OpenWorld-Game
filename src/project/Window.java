@@ -13,17 +13,17 @@ public class Window {
 
 	private Input input;
 
-	public static void setCallbacks() {
-		glfwSetErrorCallback(new GLFWErrorCallback() {
-
-			@Override
-			public void invoke(int error, long description) {
-				throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
-			}
-
-		});
-
-	}
+// 	public static void setCallbacks() {
+//		glfwSetErrorCallback(new GLFWErrorCallback() {
+//
+//			@Override
+//			public void invoke(int error, long description) {
+//				throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
+//			}
+//
+//		});
+//
+//	}
 
 	public Window() {
 		setSize(1000, 600);
@@ -32,10 +32,10 @@ public class Window {
 	}
 
 	public void createWindow(String title) {
-		window = glfwCreateWindow(width, height, title, fullscreen ? glfwGetPrimaryMonitor() : 0, 0);
+		window = glfwCreateWindow(width, height, title,glfwGetPrimaryMonitor() ,  0);
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window");
-		if (!fullscreen) {
+		if (!fullscreen) {//centers window if its not full screen
 			GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
 			glfwSetWindowPos(window, (vid.width() - width) / 2, (vid.height() - height) / 2);
 		}
@@ -68,8 +68,8 @@ public class Window {
 	}
 
 	public void update() {
-		input.update();
-		glfwPollEvents();
+		input.update();//updates input so...
+		glfwPollEvents();//...determins which key is down for the next frame
 
 	}
 

@@ -28,17 +28,17 @@ public static final int ANIM_SIZE = 2;
 
 	public Player(Transform transform) {
 		super(ANIM_SIZE,transform);
-		
+		//number of images, fps, file
 		setAnimation(ANIM_IDLE, new Animations(4,2,"player/idle"));//player standing 
-		setAnimation(ANIM_WALK, new Animations(4,2,"player/walk"));//player walking 
+		setAnimation(ANIM_WALK, new Animations(4,4,"player/walk"));//player walking 
 	}
 	
 	@Override
 	public void update (float delta, Window window,Camera camera , World world ) {
-		Vector2f movement = new Vector2f();
+		Vector2f movement = new Vector2f();//gets new position
 		
 		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_A))
-			movement.add(-10 * delta, 0);
+			movement.add(-10 * delta, 0);//move character 10 units fr every frame
 
 		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_D))
 			movement.add(10 * delta, 0);
@@ -52,7 +52,7 @@ public static final int ANIM_SIZE = 2;
 			movement.add(-10 * delta, 0);
 
 		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_RIGHT))
-			movement.add(10 * delta, 0);
+			movement.add(10 * delta, 0); 
 
 		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_UP))
 			movement.add(0, 10 * delta);
@@ -66,8 +66,8 @@ public static final int ANIM_SIZE = 2;
 		else
 			useAnimation(ANIM_IDLE);
 
-		camera.getPosition().lerp(transform.pos.mul(-world.getScale(), new Vector3f()), 0.05f);
-
+		camera.getPosition().lerp(transform.pos.mul(-world.getScale(), new Vector3f()), 0.15f);//follows the player
+//lerp = linear interpolutitation
 		
 	}
 }

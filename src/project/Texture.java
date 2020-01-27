@@ -17,11 +17,11 @@ public class Texture {
 	private int width;
 	private int height;
 	
-	public Texture(String filename) {
+	public Texture(String filename) {//reads texture image
 		BufferedImage bi;
 		try {
 			//bi = ImageIO.read(new File("./res/"+ filename));
-			bi = ImageIO.read(new File("./resorce/"+ filename));//
+			bi = ImageIO.read(new File("./resource/"+ filename));//
 			width= bi.getWidth();
 			height = bi.getHeight();
 			
@@ -35,7 +35,7 @@ public class Texture {
 					pixels.put((byte)((pixel >> 16) & 0xFF));//red
 					pixels.put((byte)((pixel >> 8) & 0xFF));//green
 
-					pixels.put((byte)(pixel & 0xFF));//blue
+					pixels.put((byte)((pixel>> 0)  & 0xFF));//blue
 
 					pixels.put((byte)((pixel >> 24) & 0xFF));//alpha
 
@@ -50,7 +50,7 @@ public class Texture {
 			
 			 
 			
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);//nearest gives sharper texture
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);	
 			
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
@@ -61,10 +61,10 @@ public class Texture {
 		
 	}
 	
-	protected void finalize() throws Throwable{
-		glDeleteTextures(id);
-		super.finalize();
-	}
+//	protected void finalize() throws Throwable{
+//		glDeleteTextures(id);
+//		super.finalize();
+//	}
 	
 	public void bind(int sampler) {
 		if(sampler >= 0 && sampler <=31 ) {

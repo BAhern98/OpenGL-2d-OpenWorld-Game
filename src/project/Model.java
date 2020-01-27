@@ -20,7 +20,7 @@ public class Model {
 	
 	public Model(float[] vertices, float[] tex_coords, int[] indices) {
 		
-		draw_count = indices.length;
+		draw_count = indices.length;//amount of vertices that are drawn with
 		
 		
 		
@@ -49,16 +49,16 @@ public class Model {
 		
 	}
 	
-	protected void finalize() throws Throwable{
-		glDeleteBuffers(v_id);
-		glDeleteBuffers(t_id);
-		glDeleteBuffers(i_id);
-		super.finalize();
-	}
+//	protected void finalize() throws Throwable{
+//		glDeleteBuffers(v_id);
+//		glDeleteBuffers(t_id);
+//		glDeleteBuffers(i_id);
+//		super.finalize();
+//	}
 	
 	public void render() {
 		glEnableVertexAttribArray(0);//enables draw method and pointer to acces attribute
-		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(1);//texture attribute
 
 
 		
@@ -69,13 +69,13 @@ public class Model {
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,i_id);
-		glDrawElements(GL_TRIANGLES, draw_count, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, draw_count, GL_UNSIGNED_INT, 0);//draws elements
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
+//		glDisableVertexAttribArray(0);//vertex attribute
+//		glDisableVertexAttribArray(1);//texture atribute
 
 		
 		

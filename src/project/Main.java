@@ -20,8 +20,8 @@ import world.TileRenderer;
 public class Main {
 
 	public Main() {
-		Window.setCallbacks();
-		
+//		Window.setCallbacks();
+
 //		AABB box1 =new AABB(new Vector2f(0,0), new Vector2f(1,1));
 //		AABB box2 =new AABB(new Vector2f(1,0), new Vector2f(1,1));
 //		
@@ -38,17 +38,18 @@ public class Main {
 		window.setFullscreen(false);
 		window.createWindow("game");
 
-		GL.createCapabilities();//creates a context,image that is on graphics card that opengl draws on
-		
-		glEnable(GL_BLEND);//ENABLE BLEND
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);//TELL OPENGL WHAT WE WANT  BLENDED, BLENDS ALPHA WITH COLOURS
+		GL.createCapabilities();// creates a context,image that is on graphics card that opengl draws on
+		//
+		// allows for transperency
+		//
+		glEnable(GL_BLEND);// ENABLE BLEND
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);// TELL OPENGL WHAT WE WANT BLENDED, BLENDS ALPHA WITH COLOURS
 
 		Camera camera = new Camera(window.getWidth(), window.getHeight());// take in height and width of window
 		glEnable(GL_TEXTURE_2D);
 
 		TileRenderer tiles = new TileRenderer();
-Entity.IntiAsset();//initialise entity asset
-
+		Entity.IntiAsset();// initialise entity asset
 
 //	float[] vertices = new float[] {
 //		-0.5f, 0.5f, 0,   //top left 0
@@ -79,20 +80,18 @@ Entity.IntiAsset();//initialise entity asset
 		// Texture tex = new Texture("./res/test.png");
 
 		World world = new World("test_level");
-		
-		
-	
+
 //		
 //		Transform t = new Transform();
 //		t.scale.x = 1;
 //		t.scale.y = 1;
 //		Player player = new Player(t);
-//		world.setTile(Tile.test2, 7, 1);
-//		world.setTile(Tile.test2, 7, 2);
-//		
-//		world.setTile(Tile.test2, 7, 6);
-		
 
+	world.setTile(Tile.tile1, 2, 2);
+
+///
+///			FPS counter
+///
 		double frame_time = 0;
 		int frames = 0;
 
@@ -100,7 +99,11 @@ Entity.IntiAsset();//initialise entity asset
 		double time = Timer.getTime();
 		double unprocessed = 0;
 
-		while (!window.shouldClose()) {
+		///
+		///
+		///
+
+		while (!window.shouldClose()) {// stops rendering when window closes
 			boolean can_render = false;
 
 			double time_2 = Timer.getTime();
@@ -108,17 +111,17 @@ Entity.IntiAsset();//initialise entity asset
 			unprocessed += passed;
 			frame_time += passed;
 			time = time_2;
+			if (window.getInput().isKeyDown(GLFW_KEY_ESCAPE)) {
+				glfwSetWindowShouldClose(window.getWindow(), true);
 
-			while (unprocessed >= frame_cap) {
+			}
+			while (unprocessed >= frame_cap) {// all update code
 				unprocessed -= frame_cap;
 				can_render = true;
 
-				if (window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)) {
-					glfwSetWindowShouldClose(window.getWindow(), true);
-
-				}
 				
-				world.update((float) frame_cap, window, camera);
+
+				world.update((float) frame_cap, window, camera);//updates everything in the world and entities
 				world.correctCamera(camera, window);
 
 				window.update();
@@ -128,12 +131,11 @@ Entity.IntiAsset();//initialise entity asset
 					frames = 0;
 
 				}
-			}       
-			
+			}
 
 			if (can_render) {
 
-				glClear(GL_COLOR_BUFFER_BIT);//clears context
+				glClear(GL_COLOR_BUFFER_BIT);// clears context
 
 //				
 //				shader.bind();
@@ -143,14 +145,14 @@ Entity.IntiAsset();//initialise entity asset
 				// tex.bind(0);
 
 				world.render(tiles, shader, camera, window);
-				//player.render(shader, camera, world);
-				window.swapBuffers();//swaps 2 contexts 
+				// player.render(shader, camera, world);
+				window.swapBuffers();// swaps 2 contexts
 				frames++;
 			}
 
 		}
 		Entity.DelAsset();// destroys entity asset
-		glfwTerminate();//cleans up data
+		glfwTerminate();// cleans up data
 
 	}
 

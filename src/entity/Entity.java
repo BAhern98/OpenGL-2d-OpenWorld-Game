@@ -15,12 +15,12 @@ import project.Texture;
 import project.Window;
 import project.World;
 
-public abstract class Entity {
+public abstract  class Entity {
 	private static Model model;
 	protected AABB bounding_box;
 	// private Texture texture ;
 	protected Transform transform;
-	protected Animations[] animations;
+	protected Animations[] animations;//array for player animations
 	private int use_animation;
 
 	//
@@ -32,18 +32,17 @@ public abstract class Entity {
 		this.transform = transform;
 		this.use_animation = 0;
 
-		bounding_box = new AABB(new Vector2f(transform.pos.x, transform.pos.y),
-				new Vector2f(transform.scale.x, transform.scale.y));
+		bounding_box = new AABB(new Vector2f(transform.pos.x, transform.pos.y), new Vector2f(transform.scale.x, transform.scale.y));//scales bounding box
 	}
-	protected void setAnimation(int index, Animations animation) {
+	protected void setAnimation(int index, Animations animation) {//sets animation
 		animations[index] = animation;
 	}
 	
-	public void useAnimation(int index) {
+	public void useAnimation(int index) {//select animation
 		this.use_animation = index;
 	}
 
-	public void move(Vector2f direction) {
+	public void move(Vector2f direction) {//tells if player has moved
 		transform.pos.add(new Vector3f(direction, 0));
 		bounding_box.getCenter().set(transform.pos.x, transform.pos.y);// updates center of bounding box
 	}
@@ -52,8 +51,12 @@ public abstract class Entity {
 
 	public void collideWithTiles(World world) {// put in new method because we want the world to handle every entity
 
-		AABB[] boxes = new AABB[25];
-
+		AABB[] boxes = new AABB[25];//sorounds emtity with 25 bounding boxes
+//
+		//
+		//  sets 5 * 5 bounding boxes around the entity
+		//
+		
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				boxes[i + j * 5] = world.getTileBoundingBox(
@@ -64,7 +67,9 @@ public abstract class Entity {
 			}
 		}
 		AABB box = null;
+		//
 		// getting closest box
+		//
 		for (int i = 0; i < boxes.length; i++) {
 			if (boxes[i] != null) {
 				if (box == null)
@@ -120,12 +125,12 @@ public abstract class Entity {
 	}
 
 	public void render(Shader shader, Camera camera, World world) {
-		Matrix4f target = camera.getprojection();
+		Matrix4f target = camera.getprojection(); 
 		target.mul(world.getWorldMatrix());
 		shader.bind();
 		shader.setUniform("sampler", 0);
 		shader.setUniform("projection", transform.getProjection(target));
-		animations[use_animation].bind(0);
+		animations[use_animation].bind(0);//binds texture at animation
 		model.render();
 	}
 
@@ -163,18 +168,18 @@ public abstract class Entity {
 		model = new Model(vertices, texture, indices);
 	}
 
-	public void collideWithEntity(Entity entity) {// method for coliding with just entites
-		Collision collision = bounding_box.getCollision(entity.bounding_box);// get all data so we can colide with the entity
-																				
-		if (collision.isIntersecting) { // test if it is intersecting
-			collision.distance.x/=2;//leaves smaller gap when moving entity objects
-			collision.distance.y/=2;
-			
-			bounding_box.correctPosition(entity.bounding_box, collision);// correct the position
-			transform.pos.set(bounding_box.getCenter().x, bounding_box.getCenter().y, 0);// setting the transform
-		
-			entity.bounding_box.correctPosition(bounding_box, collision);//corect entities bounding box with our bounding box
-			entity.transform.pos.set(entity.bounding_box.getCenter().x, entity.bounding_box.getCenter().y, 0);//set its transformation position
-		}
-	}
+//	public void collideWithEntity(Entity entity) {// method for coliding with just entites
+//		Collision collision = bounding_box.getCollision(entity.bounding_box);// get all data so we can colide with the entity
+//																				
+//		if (collision.isIntersecting) { // test if it is intersecting
+////			collision.distance.x/=2;//leaves smaller gap when moving entity objects
+////			collision.distance.y/=2;
+//			
+//			bounding_box.correctPosition(entity.bounding_box, collision);// correct the position
+//			transform.pos.set(bounding_box.getCenter().x, bounding_box.getCenter().y, 0);// setting the transform
+//		
+//			entity.bounding_box.correctPosition(bounding_box, collision);//corect entities bounding box with our bounding box
+//			entity.transform.pos.set(entity.bounding_box.getCenter().x, entity.bounding_box.getCenter().y, 0);//set its transformation position
+//		}
+//	}
 }

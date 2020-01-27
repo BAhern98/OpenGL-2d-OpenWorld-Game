@@ -16,8 +16,8 @@ import org.lwjgl.BufferUtils;
 
 public class Shader {
 	private int program;
-	private int vs;
-	private int fs;
+	private int vs;//vertex shader = processes vertices the shader takes
+	private int fs;//fragment shader = gives texture and effects
 	
 	public Shader(String filename) {
 		
@@ -35,19 +35,22 @@ public class Shader {
 		
 		fs = glCreateShader(GL_FRAGMENT_SHADER);//creates shader of fragment type so opengl knows what to do with it
 		glShaderSource(fs,readFile(filename+".fs"));//reads fragment shader
-		glCompileShader(fs);
+		glCompileShader(fs);//compiling shader
 		if(glGetShaderi(fs, GL_COMPILE_STATUS) !=1) {//desplays error message better
 			System.err.println(glGetShaderInfoLog(fs));
 			System.exit(1);
 		}
-		glAttachShader(program, vs);
-		glAttachShader(program, fs);
 		
-		glBindAttribLocation(program, 0, "vertices");//bind vertices to 0, send to attribute
+		
+		glAttachShader(program, vs);//attaches shader to program
+		glAttachShader(program, fs);//attaches shader to program
+		
+		glBindAttribLocation(program, 0, "vertices");//bind vertices to 0, send to attribute 0
 		glBindAttribLocation(program, 1, "textures");
 		
 		glLinkProgram(program);//link shader
-		if(glGetProgrami(program, GL_LINK_STATUS) !=1) {
+		
+		if(glGetProgrami(program, GL_LINK_STATUS) !=1) {//check error
 			System.err.println(glGetProgramInfoLog(program));
 			System.exit(1);
 			
@@ -62,25 +65,25 @@ public class Shader {
 		}//gets error
 
 	}
-	protected void finalize() throws Throwable{
-		glDetachShader(program, vs);
-		glDetachShader(program, fs);
-		glDeleteShader(vs);
-		glDeleteShader(fs);
-		glDeleteProgram(program);
-		super.finalize();
-	}
+//	protected void finalize() throws Throwable{
+//		glDetachShader(program, vs);
+//		glDetachShader(program, fs);
+//		glDeleteShader(vs);
+//		glDeleteShader(fs);
+//		glDeleteProgram(program);
+//		super.finalize();
+//	}
 	
 	
 	public void setUniform(String name, int value) {//uniform variable stored in location on graphics card where opengl returns to us where we use the location to pass through our data 
-		int location = glGetUniformLocation(program, name);
-		if(location != -1)
-			glUniform1i(location, value);
+		int location = glGetUniformLocation(program, name);//stores location on graphics card
+		if(location != -1)//tests if location is valid
+			glUniform1i(location, value);//takes in location and value
 	}
-	public void setUniform(String name, Matrix4f value) {
+	public void setUniform(String name, Matrix4f value) {//entity
 		int location = glGetUniformLocation(program, name);
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);//hold all information of scale, rotation and projection
-		value.get(buffer);
+		value.get(buffer);//adds value to buffer
 		if(location != -1)
 			glUniformMatrix4fv(location, false, buffer);
 	}
@@ -89,7 +92,7 @@ public class Shader {
 		glUseProgram(program);//binds to program 
 	}
 	
-	private String readFile(String filename) {
+	private String readFile(String filename) {//reads file for attaching shader to program
 		StringBuilder string = new StringBuilder();// where all contents in file goes
 		BufferedReader br;
 		try {
@@ -97,7 +100,7 @@ public class Shader {
 			String line;
 			while((line = br.readLine()) != null){
 				string.append(line);
-				string.append("\n");
+				string.append("\n");//opengl wants it exactly like a file so new line is nessary
 				
 				
 			}

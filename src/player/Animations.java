@@ -7,7 +7,7 @@ public class Animations {
 
 
 	private Texture[] frames;
-	private int pointer;
+	private int pointer;//pointer value for array
 	
 	
 	private double elapsedTime;
@@ -19,22 +19,22 @@ public class Animations {
 	
 	public Animations(int amount, int fps, String filename) {
 	// TODO Auto-generated constructor stub
-		this.pointer = 0;
-		this.currentTime = 0;
-		this.elapsedTime = 0;
+	//	this.pointer = 0;
+//		this.currentTime = 0;
+//		this.elapsedTime = 0;
 		this.lastTime = Timer.getTime();
 		this.fps = 1.0/(double)fps;
 		
 		this.frames = new Texture[amount];
 		for(int i = 0; i < amount ; i++) {
-			this.frames[i] = new Texture(filename + "/" + i + ".png");//can fin animation in different folders
+			this.frames[i] = new Texture(filename + "/" + i + ".png");//can find animation in different folders
 		}
 			
 	}
-	public void bind() {
-		bind(0);
-	}
-	
+//	public void bind() {
+//		bind(0);
+//	}
+//	
 	public void bind(int sampler) {
 		this.currentTime = Timer.getTime();
 		this.elapsedTime += currentTime - lastTime;
@@ -44,7 +44,8 @@ public class Animations {
 			pointer++;
 		}
 		
-		if(pointer >= frames.length) pointer = 0;//0vkeeps array inbounds
+		if(pointer >= frames.length)
+			pointer = 0;//0vkeeps array inbounds
 		
 		this.lastTime = currentTime;
 		

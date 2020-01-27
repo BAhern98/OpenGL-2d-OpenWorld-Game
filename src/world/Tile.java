@@ -3,17 +3,17 @@ package world;
 public class Tile {
 	public static Tile tiles[] = new Tile[255];
 	
-	public static byte not = 0;
+	public static byte NumOfTiles = 0;
 	
-	public static final Tile test_tile = new Tile( "grass");
-	public static final Tile test2	= new Tile( "rock").setSolid();
+	public static final Tile tile1 = new Tile( "grass");
+	public static final Tile tile2	= new Tile( "rock").setSolid();
 	private byte id;
 	private boolean solid;
 	private String texture;
 	
 	public Tile( String texture) {
-		this.id = not;
-		not++;
+		this.id = NumOfTiles;
+		NumOfTiles++;
 		this.texture = texture;
 		this.solid = false;
 		if (tiles[id] != null)
