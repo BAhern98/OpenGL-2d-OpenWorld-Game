@@ -88,6 +88,7 @@ public class Main {
 //		Player player = new Player(t);
 
 	world.setTile(Tile.tile1, 2, 2);
+	
 
 ///
 ///			FPS counter

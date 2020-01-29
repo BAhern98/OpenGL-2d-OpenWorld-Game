@@ -19,6 +19,7 @@ import entity.Entity;
 import entity.Player;
 import entity.Rock;
 import entity.Transform;
+import entity.Tree;
 import player.Animations;
 import world.Tile;
 import world.TileRenderer;
@@ -28,8 +29,7 @@ public class World {
 	private byte[] tiles;
 	private int width;
 	private int height;
-	private int width2;
-	private int height2;
+
 	private int scale;
 	private Matrix4f world;
 	private final int view = 24;
@@ -86,12 +86,66 @@ public class World {
 						
 				}
 			}
+			Transform r1 = new Transform();
+			r1.pos.x = 4 ;
+			r1.pos.y = -4;
 			
+			Transform r2 = new Transform();
+			r2.pos.x = 5 ;
+			r2.pos.y = -7;
+			
+			Transform r3 = new Transform();
+			r3.pos.x = 11 ;
+			r3.pos.y = -12;
+			
+			
+			Transform r4 = new Transform();
+			r4.pos.x = 10;
+			r4.pos.y = -8;
+			
+			Transform t1 = new Transform();
+			t1.pos.x = 3 ;
+			t1.pos.y = -7;
+			
+			Transform t2 = new Transform();
+			t2.pos.x = 5 ;
+			t2.pos.y = -5;
+			
+			Transform t3 = new Transform();
+			t3.pos.x = 13 ;
+			t3.pos.y = -13;
+			
+			
+			Transform t4 = new Transform();
+			t4.pos.x = 2;
+			t4.pos.y = -2;
+//			entities.add(new Entity(new Animations(1,1,"image"),t) {
+//				@Override
+//				public void update(float delta, Window window, Camera camera, World world) {
+//						move(new Vector2f(5*delta, 0));
+//
+//				}
+//			});//add entity 
+			//entities.add(new Rock(new Animations(1,1,"image"),t) 
 			
 			//TODO
 			entities.add(new Player(new Transform()));//add entity player
 
-			entities.add(new Rock(new Transform()));//add entity player
+			entities.add(new Rock(r1));//add entity rock
+			entities.add(new Rock(r3));//add entity rock
+
+			entities.add(new Rock(r2));//add entity rock
+
+			entities.add(new Rock(r4));//add entity rock
+			
+			entities.add(new Tree(t1));//add entity rock
+			entities.add(new Tree(t3));//add entity rock
+
+			entities.add(new Tree(t2));//add entity rock
+
+			entities.add(new Tree(t4));//add entity rock
+
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
@@ -99,17 +153,17 @@ public class World {
 
 	}
 
-//	public World() {
-//		width = 200;
-//		height = 200;
-//		scale = 40;
-//
-//		tiles = new byte[width * height];
-//		bounding_boxes = new AABB[width * height];
-//
-//		world = new Matrix4f().setTranslation(new Vector3f(0));
-//		world.scale(sc ale);
-//	}
+	public World() {
+		width = 200;
+		height = 200;
+		scale = 40;
+
+		tiles = new byte[width * height];
+		bounding_boxes = new AABB[width * height];
+
+		world = new Matrix4f().setTranslation(new Vector3f(0));
+		world.scale(scale);
+	}
 
 	public Matrix4f getWorldMatrix() {//returns world
 		return world;
@@ -146,10 +200,10 @@ public class World {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).collideWithTiles(this);// get entity at i and collide with tiles this
 
-//			for (int j = i + 1; j < entities.size(); j++) {// where we colide with other entities
-//				entities.get(i).collideWithEntity(entities.get(j));
-//
-//			}
+			for (int j = i + 1; j < entities.size(); j++) {// where we colide with other entities
+				entities.get(i).collideWithEntity(entities.get(j));
+
+			}
 			entities.get(i).collideWithTiles(this);// where we coliede with tiles again, if you colide with an enttiy
 													// and it pushes you into a tile it checks it
 		}

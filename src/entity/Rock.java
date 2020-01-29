@@ -12,13 +12,20 @@ public class Rock extends Entity{
 	public Rock(Transform transform) {
 		// TODO Auto-generated constructor stub
 		super(ROCK_SIZE,transform);
-		setAnimation(ROCK_IDLE, new Animations(1,1,"world_Entities/rock"));//player standing 
-		
+		setAnimation(ROCK_IDLE, new Animations(1,1,"worldEntities/rock"));//player standing 
+		useAnimation(ROCK_IDLE);
+	
 	}
 	@Override
 	public void update(float delta, Window window, Camera camera, World world) {
 		// TODO Auto-generated method stub
+	
 		
 	}
+//	public void t() {
+//		Transform t = new Transform();
+//		t.pos.x = 0;
+//		t.pos.y = -4;
+//	}
 
 }
