@@ -1,7 +1,8 @@
 package player;
 
 import project.Texture;
-import project.Timer;
+
+import project.World;
 
 public class Animations {
 
@@ -22,7 +23,7 @@ public class Animations {
 	//	this.pointer = 0;
 //		this.currentTime = 0;
 //		this.elapsedTime = 0;
-		this.lastTime = Timer.getTime();
+		this.lastTime = World.getTime();
 		this.fps = 1.0/(double)fps;
 		
 		this.frames = new Texture[amount];
@@ -36,7 +37,7 @@ public class Animations {
 //	}
 //	
 	public void bind(int sampler) {
-		this.currentTime = Timer.getTime();
+		this.currentTime = World.getTime();
 		this.elapsedTime += currentTime - lastTime;
 		
 		if(elapsedTime>=fps) {

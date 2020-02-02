@@ -16,34 +16,34 @@ import org.lwjgl.BufferUtils;
 
 public class Shader {
 	private int program;
-	private int vs;//vertex shader = processes vertices the shader takes
-	private int fs;//fragment shader = gives texture and effects
+	private int vertexShader;//vertex shader = processes vertices the shader takes
+	private int fragmentShader;//fragment shader = gives texture and effects
 	
 	public Shader(String filename) {
 		
 		program = glCreateProgram();//creates program
 		  
-		vs = glCreateShader(GL_VERTEX_SHADER);//creates shader of vertex type so opengl knows what to do with it
-		glShaderSource(vs,readFile(filename+".vs"));//reads vertex shader
-		glCompileShader(vs);
-		if(glGetShaderi(vs, GL_COMPILE_STATUS) !=1) {//desplays error message better
-			System.err.println(glGetShaderInfoLog(vs));
+		vertexShader = glCreateShader(GL_VERTEX_SHADER);//creates shader of vertex type so opengl knows what to do with it
+		glShaderSource(vertexShader,readFile(filename+".vs"));//reads vertex shader
+		glCompileShader(vertexShader);
+		if(glGetShaderi(vertexShader, GL_COMPILE_STATUS) !=1) {//desplays error message better
+			System.err.println(glGetShaderInfoLog(vertexShader));
 			System.exit(1);
 		}
 		
 		
 		
-		fs = glCreateShader(GL_FRAGMENT_SHADER);//creates shader of fragment type so opengl knows what to do with it
-		glShaderSource(fs,readFile(filename+".fs"));//reads fragment shader
-		glCompileShader(fs);//compiling shader
-		if(glGetShaderi(fs, GL_COMPILE_STATUS) !=1) {//desplays error message better
-			System.err.println(glGetShaderInfoLog(fs));
+		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);//creates shader of fragment type so opengl knows what to do with it
+		glShaderSource(fragmentShader,readFile(filename+".fs"));//reads fragment shader
+		glCompileShader(fragmentShader);//compiling shader
+		if(glGetShaderi(fragmentShader, GL_COMPILE_STATUS) !=1) {//desplays error message better
+			System.err.println(glGetShaderInfoLog(fragmentShader));
 			System.exit(1);
 		}
 		
 		
-		glAttachShader(program, vs);//attaches shader to program
-		glAttachShader(program, fs);//attaches shader to program
+		glAttachShader(program, vertexShader);//attaches shader to program
+		glAttachShader(program, fragmentShader);//attaches shader to program
 		
 		glBindAttribLocation(program, 0, "vertices");//bind vertices to 0, send to attribute 0
 		glBindAttribLocation(program, 1, "textures");

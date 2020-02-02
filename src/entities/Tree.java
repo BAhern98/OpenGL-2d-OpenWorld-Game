@@ -1,4 +1,4 @@
-package entity;
+package entities;
 
 import player.Animations;
 import project.Camera;

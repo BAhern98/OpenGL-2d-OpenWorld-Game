@@ -15,11 +15,11 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import collision.AABB;
-import entity.Entity;
-import entity.Player;
-import entity.Rock;
-import entity.Transform;
-import entity.Tree;
+import entities.Entity;
+import entities.Player;
+import entities.Rock;
+import entities.Transform;
+import entities.Tree;
 import player.Animations;
 import world.Tile;
 import world.TileRenderer;
@@ -167,6 +167,9 @@ public class World {
 
 	public Matrix4f getWorldMatrix() {//returns world
 		return world;
+	}
+	public static double getTime() {
+		return (double)System.nanoTime()/(double)1000000000L;
 	}
 
 	public void render(TileRenderer render, Shader shader, Camera cam, Window window) {//controls amount of tiles on screen, renders only tiles on the screen

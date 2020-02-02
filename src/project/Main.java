@@ -11,9 +11,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import collision.AABB;
-import entity.Entity;
-import entity.Player;
-import entity.Transform;
+import entities.Entity;
+import entities.Player;
+import entities.Transform;
 import world.Tile;
 import world.TileRenderer;
 
@@ -22,12 +22,7 @@ public class Main {
 	public Main() {
 //		Window.setCallbacks();
 
-//		AABB box1 =new AABB(new Vector2f(0,0), new Vector2f(1,1));
-//		AABB box2 =new AABB(new Vector2f(1,0), new Vector2f(1,1));
-//		
-//		if(box1.isIntersecting(box2))
-//			System.out.println("these boxes are intersecting");
-//		
+
 		if (glfwInit() != true) {
 			System.err.println("glfw failed to initialize !");// if glfw is working
 			System.exit(1);
@@ -97,7 +92,7 @@ public class Main {
 		int frames = 0;
 
 		double frame_cap = 1.0 / 60.0;
-		double time = Timer.getTime();
+		double time = World.getTime();
 		double unprocessed = 0;
 
 		///
@@ -107,7 +102,7 @@ public class Main {
 		while (!window.shouldClose()) {// stops rendering when window closes
 			boolean can_render = false;
 
-			double time_2 = Timer.getTime();
+			double time_2 = World.getTime();
 			double passed = time_2 - time;
 			unprocessed += passed;
 			frame_time += passed;

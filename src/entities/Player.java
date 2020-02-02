@@ -1,4 +1,4 @@
-package entity;
+package entities;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFW;
 
 import collision.AABB;
 import collision.Collision;
+import entities.Entity;
 import player.Animations;
 import project.Camera;
 import project.Model;
@@ -13,7 +14,6 @@ import project.Shader;
 import project.Texture;
 import project.Window;
 import project.World;
-import entity.Entity;
 
 public class Player extends Entity {
 //	private Model model;

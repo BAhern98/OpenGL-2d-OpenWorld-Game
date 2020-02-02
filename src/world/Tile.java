@@ -17,7 +17,7 @@ public class Tile {
 		this.texture = texture;
 		this.solid = false;
 		if (tiles[id] != null)
-			throw new IllegalStateException("Tiles at [" + id + "] is already being used");
+			throw new IllegalStateException("Tiles [" + id + "] is not available");
 		tiles[id] = this;
 	}
 	
