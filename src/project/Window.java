@@ -9,7 +9,7 @@ public class Window {
 	private long window;
 	private int width, height;
 
-	private boolean fullscreen;
+	//private boolean fullscreen;
 
 	private Input input;
 
@@ -26,19 +26,19 @@ public class Window {
 //	}
 
 	public Window() {
-		setSize(1000, 600);
-		setFullscreen(false);
+		setSize(640, 480);
+		//setFullscreen(false);
 		// TODO Auto-generated constructor stub
 	}
 
 	public void createWindow(String title) {
+		
 		window = glfwCreateWindow(width, height, title,glfwGetPrimaryMonitor() ,  0);
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window");
-		if (!fullscreen) {//centers window if its not full screen
-			GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
-			glfwSetWindowPos(window, (vid.width() - width) / 2, (vid.height() - height) / 2);
-		}
+
+		glfwShowWindow(window);//displays wndow after being created
+
 
 		glfwShowWindow(window);//displays wndow after being created
 
@@ -62,10 +62,10 @@ public class Window {
 		this.height = height;
 	}
 
-	public void setFullscreen(boolean fullscreen) {
-		this.fullscreen = fullscreen;
-
-	}
+//	public void setFullscreen(boolean fullscreen) {
+//		this.fullscreen = fullscreen;
+//
+//	}
 
 	public void update() {
 		input.update();//updates input so...
@@ -82,9 +82,9 @@ public class Window {
 		return height;
 	}
 
-	public boolean isFullscreen() {
-		return fullscreen;
-	}
+//	public boolean isFullscreen() {
+//		return fullscreen;
+//	}
 
 	public long getWindow() {
 		return window;

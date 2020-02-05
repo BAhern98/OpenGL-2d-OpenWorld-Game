@@ -30,7 +30,7 @@ public class Main {
 
 		Window window = new Window();
 		window.setSize(640, 480);
-		window.setFullscreen(false);
+	//	window.setFullscreen(true);
 		window.createWindow("game");
 
 		GL.createCapabilities();// creates a context,image that is on graphics card that opengl draws on
@@ -95,9 +95,7 @@ public class Main {
 		double time = World.getTime();
 		double unprocessed = 0;
 
-		///
-		///
-		///
+		
 
 		while (!window.shouldClose()) {// stops rendering when window closes
 			boolean can_render = false;

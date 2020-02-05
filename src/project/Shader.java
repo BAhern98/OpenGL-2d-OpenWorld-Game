@@ -24,7 +24,7 @@ public class Shader {
 		program = glCreateProgram();//creates program
 		  
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);//creates shader of vertex type so opengl knows what to do with it
-		glShaderSource(vertexShader,readFile(filename+".vs"));//reads vertex shader
+		glShaderSource(vertexShader,readFile(filename+".vertexShader"));//reads vertex shader
 		glCompileShader(vertexShader);
 		if(glGetShaderi(vertexShader, GL_COMPILE_STATUS) !=1) {//desplays error message better
 			System.err.println(glGetShaderInfoLog(vertexShader));
@@ -34,7 +34,7 @@ public class Shader {
 		
 		
 		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);//creates shader of fragment type so opengl knows what to do with it
-		glShaderSource(fragmentShader,readFile(filename+".fs"));//reads fragment shader
+		glShaderSource(fragmentShader,readFile(filename+".fragmentShader"));//reads fragment shader
 		glCompileShader(fragmentShader);//compiling shader
 		if(glGetShaderi(fragmentShader, GL_COMPILE_STATUS) !=1) {//desplays error message better
 			System.err.println(glGetShaderInfoLog(fragmentShader));

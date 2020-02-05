@@ -117,8 +117,18 @@ public class World {
 			
 			
 			Transform t4 = new Transform();
-			t4.pos.x = 2;
-			t4.pos.y = -2;
+			t4.pos.x = 7;
+			t4.pos.y = -5;
+	
+			
+			Transform t5 = new Transform();
+			t4.pos.x = 8;
+			t4.pos.y = -9;
+	
+			
+			Transform t6 = new Transform();
+			t4.pos.x = 14;
+			t4.pos.y = -14;
 //			entities.add(new Entity(new Animations(1,1,"image"),t) {
 //				@Override
 //				public void update(float delta, Window window, Camera camera, World world) {
@@ -145,6 +155,10 @@ public class World {
 
 			entities.add(new Tree(t4));//add entity rock
 
+			entities.add(new Tree(t5));//add entity rock
+
+			entities.add(new Tree(t6));//add entity rock
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,7 +183,7 @@ public class World {
 		return world;
 	}
 	public static double getTime() {
-		return (double)System.nanoTime()/(double)1000000000L;
+		return (double)System.nanoTime()/(double)1000000000;
 	}
 
 	public void render(TileRenderer render, Shader shader, Camera cam, Window window) {//controls amount of tiles on screen, renders only tiles on the screen

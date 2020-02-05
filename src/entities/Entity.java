@@ -172,14 +172,14 @@ public abstract  class Entity {
 		Collision collision = bounding_box.getCollision(entity.bounding_box);// get all data so we can colide with the entity
 																				
 		if (collision.isIntersecting) { // test if it is intersecting
-//			collision.distance.x/=2;//leaves smaller gap when moving entity objects
-//			collision.distance.y/=2;
+			
 			
 			bounding_box.correctPosition(entity.bounding_box, collision);// correct the position
 			transform.pos.set(bounding_box.getCenter().x, bounding_box.getCenter().y, 0);// setting the transform
 		
 			entity.bounding_box.correctPosition(bounding_box, collision);//corect entities bounding box with our bounding box
 			entity.transform.pos.set(entity.bounding_box.getCenter().x, entity.bounding_box.getCenter().y, 0);//set its transformation position
+		
 		}
-	}
+	} 
 }
