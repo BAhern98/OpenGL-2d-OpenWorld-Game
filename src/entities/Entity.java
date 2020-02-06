@@ -169,11 +169,12 @@ public abstract  class Entity {
 	}
 
 	public void collideWithEntity(Entity entity) {// method for coliding with just entites
-		Collision collision = bounding_box.getCollision(entity.bounding_box);// get all data so we can colide with the entity
+		Collision collision = bounding_box.getCollision(entity.bounding_box);// get all data so we can colide with the entity using aabb
 																				
 		if (collision.isIntersecting) { // test if it is intersecting
-			
-			
+			collision.distance.x/=2;//leaves smaller gap when moving entity objects
+			collision.distance.y/=2;
+ 			
 			bounding_box.correctPosition(entity.bounding_box, collision);// correct the position
 			transform.pos.set(bounding_box.getCenter().x, bounding_box.getCenter().y, 0);// setting the transform
 		

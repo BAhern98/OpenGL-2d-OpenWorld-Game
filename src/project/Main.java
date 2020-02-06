@@ -10,6 +10,7 @@ import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
+import audio.MusicPlayer;
 import collision.AABB;
 import entities.Entity;
 import entities.Player;
@@ -22,7 +23,9 @@ public class Main {
 	public Main() {
 //		Window.setCallbacks();
 
-
+//			pool.runTask(new Test1());
+//			pool.runTask(new test2());
+//			pool.join();
 		if (glfwInit() != true) {
 			System.err.println("glfw failed to initialize !");// if glfw is working
 			System.exit(1);
@@ -69,7 +72,10 @@ public class Main {
 //	
 //	Model model = new Model(vertices, texture,indices);
 //	
-
+		
+		
+		
+		
 		Shader shader = new Shader("shader");
 
 		// Texture tex = new Texture("./res/test.png");
@@ -151,6 +157,10 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		ThreadPool pool = new ThreadPool(1);
+		MusicPlayer musicplayer = new MusicPlayer("The Warning");
+		pool.runTask(musicplayer);
+		
 		new Main();
 	}
 }
