@@ -35,6 +35,18 @@ public class World {
 	private final int view = 24;
 	private AABB[] bounding_boxes;
 //rock = 1 rgb
+	
+	public World() {
+
+		scale = 40;
+
+		//tiles = new byte[width * height];
+		bounding_boxes = new AABB[width * height];
+
+		world = new Matrix4f().setTranslation(new Vector3f(0));
+		world.scale(scale);
+	}
+
 
 	public World(String rock) {
 		try {
@@ -129,14 +141,7 @@ public class World {
 			Transform t6 = new Transform();
 			t4.pos.x = 14;
 			t4.pos.y = -14;
-//			entities.add(new Entity(new Animations(1,1,"image"),t) {
-//				@Override
-//				public void update(float delta, Window window, Camera camera, World world) {
-//						move(new Vector2f(5*delta, 0));
-//
-//				}
-//			});//add entity 
-			//entities.add(new Rock(new Animations(1,1,"image"),t) 
+
 			
 			//TODO
 			entities.add(new Player(new Transform()));//add entity player
@@ -167,18 +172,7 @@ public class World {
 
 	}
 
-	public World() {
-		width = 200;
-		height = 200;
-		scale = 40;
-
-		tiles = new byte[width * height];
-		bounding_boxes = new AABB[width * height];
-
-		world = new Matrix4f().setTranslation(new Vector3f(0));
-		world.scale(scale);
-	}
-
+	
 	public Matrix4f getWorldMatrix() {//returns world
 		return world;
 	}

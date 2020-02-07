@@ -21,6 +21,11 @@ import world.TileRenderer;
 public class Main {
 
 	public Main() {
+		
+		ThreadPool pool = new ThreadPool(1);
+		MusicPlayer musicplayer = new MusicPlayer("Ignition");
+		
+		pool.runTask(musicplayer);
 //		Window.setCallbacks();
 
 //			pool.runTask(new Test1());
@@ -44,36 +49,12 @@ public class Main {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);// TELL OPENGL WHAT WE WANT BLENDED, BLENDS ALPHA WITH COLOURS
 
 		Camera camera = new Camera(window.getWidth(), window.getHeight());// take in height and width of window
-		glEnable(GL_TEXTURE_2D);
+		//glEnable(GL_TEXTURE_2D);
 
 		TileRenderer tiles = new TileRenderer();
 		Entity.IntiAsset();// initialise entity asset
 
-//	float[] vertices = new float[] {
-//		-0.5f, 0.5f, 0,   //top left 0
-//		0.5f, 0.5f, 0,   //top right 1
-//		0.5f, -0.5f, 0, //bottom right 2
-//		-0.5f, -0.5f, 0,//bottom left  3
-//		
-//	};
-//	
-//	float[] texture = new float[] {
-//		 0,0,
-//		 1,0,
-//		 1,1, 
-//		 0,1,
-//	
-//	};
-//	
-//	int[] indices = new int[] {
-//			0,1,2,
-//			2,3,0,
-//	};
-//	
-//	Model model = new Model(vertices, texture,indices);
-//	
-		
-		
+
 		
 		
 		Shader shader = new Shader("shader");
@@ -112,8 +93,11 @@ public class Main {
 			frame_time += passed;
 			time = time_2;
 			if (window.getInput().isKeyDown(GLFW_KEY_ESCAPE)) {
+		
+				pool.close();
 				glfwSetWindowShouldClose(window.getWindow(), true);
-
+			
+				
 			}
 			while (unprocessed >= frame_cap) {// all update code
 				unprocessed -= frame_cap;
@@ -157,9 +141,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		ThreadPool pool = new ThreadPool(1);
-		MusicPlayer musicplayer = new MusicPlayer("The Warning");
-		pool.runTask(musicplayer);
+	
 		
 		new Main();
 	}

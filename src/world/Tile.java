@@ -1,7 +1,7 @@
 package world;
 
 public class Tile {
-	public static Tile tiles[] = new Tile[255];
+	public static Tile tiles[] = new Tile[2];
 	
 	public static byte NumOfTiles = 0;
 	

@@ -74,12 +74,9 @@ public class Model {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-//		glDisableVertexAttribArray(0);//vertex attribute
-//		glDisableVertexAttribArray(1);//texture atribute
-
-		
-		
-		
+		glDisableVertexAttribArray(0);//vertex attribute
+		glDisableVertexAttribArray(1);//texture atribute
+	
 	}
 	
 	private FloatBuffer createBuffer(float[] data) {
