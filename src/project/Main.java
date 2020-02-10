@@ -69,12 +69,18 @@ public class Main {
 //		t.scale.y = 1;
 //		Player player = new Player(t);
 
-	world.setTile(Tile.tile1, 2, 2);
-	
 
 ///
 ///			FPS counter
 ///
+		
+		
+		
+//		world.setTile(Tile.tile2, 4, 4);
+		
+		
+		
+		
 		double frame_time = 0;
 		int frames = 0;
 

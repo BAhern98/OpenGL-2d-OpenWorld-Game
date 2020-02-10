@@ -65,14 +65,16 @@ public class Shader {
 		}//gets error
 
 	}
-//	protected void finalize() throws Throwable{
-//		glDetachShader(program, vs);
-//		glDetachShader(program, fs);
-//		glDeleteShader(vs);
-//		glDeleteShader(fs);
-//		glDeleteProgram(program);
-//		super.finalize();
-//	}
+	
+	
+	protected void finalize() throws Throwable{
+		glDetachShader(program, vertexShader);
+		glDetachShader(program, fragmentShader);
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		glDeleteProgram(program);
+		super.finalize();
+	}
 	
 	
 	public void setUniform(String name, int value) {//uniform variable stored in location on graphics card where opengl returns to us where we use the location to pass through our data 

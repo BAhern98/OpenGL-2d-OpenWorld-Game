@@ -49,12 +49,12 @@ public class Model {
 		
 	}
 	
-//	protected void finalize() throws Throwable{
-//		glDeleteBuffers(v_id);
-//		glDeleteBuffers(t_id);
-//		glDeleteBuffers(i_id);
-//		super.finalize();
-//	}
+	protected void finalize() throws Throwable{
+		glDeleteBuffers(v_id);
+		glDeleteBuffers(t_id);
+		glDeleteBuffers(i_id);
+		super.finalize();
+	}
 	
 	public void render() {
 		glEnableVertexAttribArray(0);//enables draw method and pointer to acces attribute

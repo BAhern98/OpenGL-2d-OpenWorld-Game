@@ -32,19 +32,19 @@ public class World {
 
 	private int scale;
 	private Matrix4f world;
-	private final int view = 24;
+	private final int view =24;
 	private AABB[] bounding_boxes;
 //rock = 1 rgb
 	
 	public World() {
 
-		scale = 40;
+		//scale = 20;
 
 		//tiles = new byte[width * height];
-		bounding_boxes = new AABB[width * height];
+		//bounding_boxes = new AABB[width * height];
 
-		world = new Matrix4f().setTranslation(new Vector3f(0));
-		world.scale(scale);
+		//world = new Matrix4f().setTranslation(new Vector3f(0));
+		//world.scale(scale);
 	}
 
 
@@ -180,22 +180,24 @@ public class World {
 		return (double)System.nanoTime()/(double)1000000000;
 	}
 
-	public void render(TileRenderer render, Shader shader, Camera cam, Window window) {//controls amount of tiles on screen, renders only tiles on the screen
+	public void render(TileRenderer render, Shader shader, Camera camera, Window window) {//controls amount of tiles 
+																						//on screen,
+																						//renders only tiles on the screen
 
-		int posX = ((int) cam.getPosition().x + (window.getWidth() / 2)) / (scale * 2);
-		int posY = ((int) cam.getPosition().y - (window.getHeight() / 2)) / (scale * 2);
+		int posX = ((int) camera.getPosition().x + (window.getWidth() / 2)) / (scale * 2);//gets the x cordiotions for center of screen
+		int posY = ((int) camera.getPosition().y - (window.getHeight() / 2)) / (scale * 2);//gets the y cordiotions for center of screen
 
 		for (int i = 0; i < view; i++) {
 			for (int j = 0; j < view; j++) {
 				Tile t = getTile(i - posX, j + posY);
 				if (t != null)
-					render.renderTile(t, i - posX, -j - posY, shader, world, cam);
+					render.renderTile(t, i - posX, -j - posY, shader, world, camera);
 
 			}
 		}
 
 		for (Entity entity : entities) {// itaarate through all the entities in list of entities
-			entity.render(shader, cam, this);// render each entity
+			entity.render(shader, camera, this);// render each entity
 		}
 
 	}
@@ -220,22 +222,22 @@ public class World {
 		}
 	}
 
-	public void correctCamera(Camera camera, Window window) {//follows player
-		Vector3f pos = camera.getPosition();
+	public void correctCamera(Camera camera, Window window) {//stops camera from leaving world
+		Vector3f position = camera.getPosition();
 		int w = -width * scale * 2;// get exict width or world
-		int h = height * scale * 2;
+		int h = height * scale * 2;// get exict width or world
 
-		if (pos.x > -(window.getWidth() / 2) + scale)// stops camera leaving left map
-			pos.x = -(window.getWidth() / 2) + scale;
+		if (position.x > -(window.getWidth() / 2) + scale)// stops camera leaving left map
+			position.x = -(window.getWidth() / 2) + scale;
 
-		if (pos.x < w + (window.getWidth() / 2) + scale)// stops camera leaving right map
-			pos.x = w + (window.getWidth() / 2) + scale;
+		if (position.x < w + (window.getWidth() / 2) + scale)// stops camera leaving right map
+			position.x = w + (window.getWidth() / 2) + scale;
 
-		if (pos.y < (window.getHeight() / 2) - scale)// stops camera leaving top map
-			pos.y = (window.getHeight() / 2) - scale;
+		if (position.y < (window.getHeight() / 2) - scale)// stops camera leaving top map
+			position.y = (window.getHeight() / 2) - scale;
 
-		if (pos.y > h - (window.getHeight() / 2) - scale)// stops camera leaving bottom map
-			pos.y = h - (window.getHeight() / 2) - scale;
+		if (position.y > h - (window.getHeight() / 2) - scale)// stops camera leaving bottom map
+			position.y = h - (window.getHeight() / 2) - scale;
 	}
 
 	public void setTile(Tile tile, int x, int y) {//sets indivisual tiles
