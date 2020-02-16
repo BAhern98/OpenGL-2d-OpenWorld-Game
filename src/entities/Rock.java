@@ -7,13 +7,13 @@ import project.Window;
 import project.World;
 
 public class Rock extends Entity{
-	public static final int ROCK_IDLE = 0;
-	public static final int ROCK_SIZE = 1;
+	public static final int IDLE = 0;
+	public static final int SIZE = 1;
 	public Rock(Transform transform) {
 		// TODO Auto-generated constructor stub
-		super(ROCK_SIZE,transform);
-		setAnimation(ROCK_IDLE, new Animations(1,1,"worldEntities/rock"));//player standing 
-		useAnimation(ROCK_IDLE);
+		super(SIZE,transform);
+		setAnimation(IDLE, new Animations(1,1,"worldEntities/rock"));//player standing 
+		useAnimation(IDLE);
 	
 	}
 	@Override

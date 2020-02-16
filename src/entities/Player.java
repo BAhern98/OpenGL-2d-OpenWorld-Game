@@ -23,11 +23,11 @@ public class Player extends Entity {
 //	protected Animations texture;
 	public static final int IDLE = 0;
 	public static final int  RUN = 1;
-public static final int ANIM_SIZE = 6;
+
 
 
 	public Player(Transform transform) {
-		super(1,transform);
+		super(4,transform);
 		//number of images, fps, file
 		setAnimation(IDLE, new Animations(4,2,"player/idle"));//player standing 
 		setAnimation(RUN, new Animations(4,4,"player/run"));//player walking 
