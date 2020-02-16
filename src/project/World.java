@@ -33,38 +33,31 @@ public class World {
 	private int scale;
 	private Matrix4f world;
 	private final int view =24;
-	private AABB[] bounding_boxes;
+	private AABB[] boundingBoxes;
 //rock = 1 rgb
 	
-	public World() {
 
-		//scale = 20;
-
-		//tiles = new byte[width * height];
-		//bounding_boxes = new AABB[width * height];
-
-		//world = new Matrix4f().setTranslation(new Vector3f(0));
-		//world.scale(scale);
-	}
 
 
 	public World(String rock) {
 		try {
-			BufferedImage tile_sheet = ImageIO.read(new File("./levels/" + rock + "/tiles.png"));//takes in level map
-			//BufferedImage tile_sheet2 = ImageIO.read(new File("./levels/" + brick + "/tiles.png"));
-		//	BufferedImage entity_sheet = ImageIO.read(new File("./levels/" + rock + "/entities.png"));
+			BufferedImage landscape = ImageIO.read(new File("./levels/" + rock + "/tiles.png"));//takes in level map
+			
+			
+			
+			
+		
 
 
-			width = tile_sheet.getWidth();
-			height = tile_sheet.getHeight();
-//			width2 = entity_sheet.getWidth();
-//			height2 = entity_sheet.getHeight();
+			width = landscape.getWidth();
+			height = landscape.getHeight();
+
 			scale = 40;
 			
 			this.world = new Matrix4f().setTranslation(new Vector3f(0));//puts the top left corner of the world into the center of the screen
 			this.world.scale(scale);//scales world
 //
-			int[] colorTileSheet = tile_sheet.getRGB(0, 0, width, height, null, 0, width);// returns all pixels within
+			int[] colourLandscape = landscape.getRGB(0, 0, width, height, null, 0, width);// returns all pixels within
 //																							// image,Returns an array of
 //																							// integer pixels in the
 //																							// default RGB color model
@@ -75,75 +68,83 @@ public class World {
 //			int[] colorEntitySheet = entity_sheet.getRGB(0, 0, width2, height2, null, 0, width2);
 
 			tiles = new byte[width * height];// inalise tiles
-			bounding_boxes = new AABB[width * height];// initalise boundig boxes
+			
+			
+			boundingBoxes = new AABB[width * height];// initalise boundig boxes
+			
+			
+			
+			
 			entities = new ArrayList<Entity>();// initialise list to new array list
+			
+			
 
 			//Transform transform;// transform for entity
 
 
 			for(int y = 0; y<height; y++) {
 				for (int x = 0; x < width; x++) {
-					int red = (colorTileSheet[x + y * width]>> 16) & 0xFF;//gets pixel
-					Tile t;
+					int redPixel = (colourLandscape[x + y * width]>> 16) & 0xFF;//gets pixel
+					Tile solidTile;
 					try {
-						t= Tile.tiles[red]; 
+						solidTile= Tile.tiles[redPixel]; 
 						
 					} catch (ArrayIndexOutOfBoundsException e) {
-						t=null;
+						solidTile=null;
 						// TODO: handle exception
 					}
 					
-					if(t !=null)
-						setTile(t,x,y);
+					if(solidTile !=null)
+						setTile(solidTile,x,y);
 						
 				}
 			}
 			Transform r1 = new Transform();
-			r1.pos.x = 4 ;
-			r1.pos.y = -4;
+			r1.position.x = 4 ;
+			r1.position.y = -4;
 			
 			Transform r2 = new Transform();
-			r2.pos.x = 5 ;
-			r2.pos.y = -7;
+			r2.position.x = 5 ;
+			r2.position.y = -7;
 			
 			Transform r3 = new Transform();
-			r3.pos.x = 11 ;
-			r3.pos.y = -12;
+			r3.position.x = 11 ;
+			r3.position.y = -12;
 			
 			
 			Transform r4 = new Transform();
-			r4.pos.x = 10;
-			r4.pos.y = -8;
+			r4.position.x = 10;
+			r4.position.y = -8;
 			
 			Transform t1 = new Transform();
-			t1.pos.x = 3 ;
-			t1.pos.y = -7;
+			t1.position.x = 3 ;
+			t1.position.y = -7;
 			
 			Transform t2 = new Transform();
-			t2.pos.x = 5 ;
-			t2.pos.y = -5;
+			t2.position.x = 5 ;
+			t2.position.y = -5;
 			
 			Transform t3 = new Transform();
-			t3.pos.x = 13 ;
-			t3.pos.y = -13;
+			t3.position.x = 13 ;
+			t3.position.y = -13;
 			
 			
 			Transform t4 = new Transform();
-			t4.pos.x = 7;
-			t4.pos.y = -5;
+			t4.position.x = 7;
+			t4.position.y = -5;
 	
 			
 			Transform t5 = new Transform();
-			t4.pos.x = 8;
-			t4.pos.y = -9;
+			t4.position.x = 8;
+			t4.position.y = -9;
 	
 			
 			Transform t6 = new Transform();
-			t4.pos.x = 14;
-			t4.pos.y = -14;
+			t4.position.x = 14;
+			t4.position.y = -14;
 
 			
-			//TODO
+		
 			entities.add(new Player(new Transform()));//add entity player
 
 			entities.add(new Rock(r1));//add entity rock
@@ -176,6 +177,9 @@ public class World {
 	public Matrix4f getWorldMatrix() {//returns world
 		return world;
 	}
+	
+	
+	
 	public static double getTime() {
 		return (double)System.nanoTime()/(double)1000000000;
 	}
@@ -198,6 +202,11 @@ public class World {
 
 		for (Entity entity : entities) {// itaarate through all the entities in list of entities
 			entity.render(shader, camera, this);// render each entity
+		
+			
+			if(!entity.isActive())
+			entities.remove(entity);
+		
 		}
 
 	}
@@ -217,8 +226,8 @@ public class World {
 				entities.get(i).collideWithEntity(entities.get(j));
 
 			}
-			entities.get(i).collideWithTiles(this);// where we coliede with tiles again, if you colide with an enttiy
-													// and it pushes you into a tile it checks it
+			
+
 		}
 	}
 
@@ -240,12 +249,12 @@ public class World {
 			position.y = h - (window.getHeight() / 2) - scale;
 	}
 
-	public void setTile(Tile tile, int x, int y) {//sets indivisual tiles
+	public void setTile(Tile tile, int x, int y) {//sets individual tiles
 		tiles[x + y * width] = tile.getId();
 		if (tile.isSolid()) {
-			bounding_boxes[x + y * width] = new AABB(new Vector2f(x * 2, -y * 2), new Vector2f(1, 1));//enables collision on tiles set to solid
+			boundingBoxes[x + y * width] = new AABB(new Vector2f(x * 2, -y * 2), new Vector2f(1, 1));//enables collision on tiles set to solid
 		} else {
-			bounding_boxes[x + y * width] = null;
+			boundingBoxes[x + y * width] = null;
 		}
 	}
 
@@ -259,7 +268,7 @@ public class World {
 
 	public AABB getTileBoundingBox(int x, int y) {//gets solid tiles as bounding boxes
 		try {
-			return bounding_boxes[x + y * width];
+			return boundingBoxes[x + y * width];
 		} catch (ArrayIndexOutOfBoundsException e) {
 			return null;// TODO: handle exception
 		}

@@ -21,5 +21,9 @@ public class Tree extends Entity{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void destroy() {
+
+	}
 
 }

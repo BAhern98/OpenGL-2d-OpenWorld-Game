@@ -1,10 +1,10 @@
-#version 120
-varying vec2 tex_coords;
+#version 450
+varying vec2 textureCoordinates;
 attribute vec3 vertices;
 attribute vec2 textures;
 uniform mat4 projection;
 
 void main(){
-	tex_coords = textures;
+	textureCoordinates = textures;
   	gl_Position =  projection *vec4(vertices, 1) ;
 }

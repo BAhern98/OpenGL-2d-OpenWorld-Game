@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="library/lwjgl-stb.jar"/>
 	<classpathentry kind="lib" path="library/lwjgl.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Brendan Ahern/eclipse-workspace/project/joml.jar"/>
+	<classpathentry kind="lib" path="jl1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

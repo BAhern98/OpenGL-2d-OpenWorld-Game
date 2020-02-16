@@ -13,11 +13,11 @@ import javax.sound.sampled.FloatControl;
 
 public class MusicPlayer implements Runnable{
 	private ArrayList<String> musicFiles;
-	private int currentSongIndex;
+	private int SongIndex;
 
-	public MusicPlayer(String... files) {
+	public MusicPlayer(String file) {
 		musicFiles = new ArrayList<String>();
-		for(String file : files)
+		
 			musicFiles.add("./resource/media/"+file+ ".wav");
 		// TODO Auto-generated constructor stub
 	}
@@ -28,10 +28,9 @@ public class MusicPlayer implements Runnable{
 			AudioFormat format = ais.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 			Clip clip = (Clip) AudioSystem.getLine(info);
-			clip.open(ais);
-			FloatControl gainControl= (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-10);
+			clip.open(ais); 
 			clip.start();
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,7 +42,9 @@ public class MusicPlayer implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		playSound(musicFiles.get(currentSongIndex));
+		playSound(musicFiles.get(SongIndex));
+	
+		
 		
 	}
 

@@ -9,21 +9,10 @@ public class Window {
 	private long window;
 	private int width, height;
 
-	//private boolean fullscreen;
+	
 
 	private Input input;
 
-// 	public static void setCallbacks() {
-//		glfwSetErrorCallback(new GLFWErrorCallback() {
-//
-//			@Override
-//			public void invoke(int error, long description) {
-//				throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
-//			}
-//
-//		});
-//
-//	}
 
 	public Window() {
 		setSize(640, 480);
@@ -34,8 +23,10 @@ public class Window {
 	public void createWindow(String title) {
 		
 		window = glfwCreateWindow(width, height, title,glfwGetPrimaryMonitor() ,  0);
+		
+		
 		if (window == 0)
-			throw new IllegalStateException("Failed to create window");
+			throw new IllegalStateException("Window was not created");
 
 		glfwShowWindow(window);//displays wndow after being created
 
@@ -62,10 +53,6 @@ public class Window {
 		this.height = height;
 	}
 
-//	public void setFullscreen(boolean fullscreen) {
-//		this.fullscreen = fullscreen;
-//
-//	}
 
 	public void update() {
 		input.update();//updates input so...

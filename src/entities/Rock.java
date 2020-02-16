@@ -22,6 +22,10 @@ public class Rock extends Entity{
 	
 		
 	}
+	@Override
+	public void destroy() {
+
+	}
 //	public void t() {
 //		Transform t = new Transform();
 //		t.pos.x = 0;

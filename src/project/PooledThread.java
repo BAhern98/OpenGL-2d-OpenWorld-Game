@@ -22,13 +22,12 @@ private ThreadPool pool;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(task == null) return;
-			try {
-			
-			task.run();
-			}catch(Throwable t) {
-				pool.uncaughtException(this, t);
+			if(task != null)
+				task.run();
+			else{
+				return;
 			}
+
 		}
 	}
 	

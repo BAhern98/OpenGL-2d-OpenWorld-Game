@@ -4,6 +4,10 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.FileInputStream;
+
+import javax.imageio.stream.FileImageInputStream;
+
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -13,32 +17,34 @@ import org.lwjgl.opengl.GL;
 import audio.MusicPlayer;
 import collision.AABB;
 import entities.Entity;
-import entities.Player;
+//import entities.Player;
 import entities.Transform;
+import javazoom.jl.player.Player;
 import world.Tile;
 import world.TileRenderer;
 
 public class Main {
 
+	
 	public Main() {
+		
+		
+
+		
+		
 		
 		ThreadPool pool = new ThreadPool(1);
 		MusicPlayer musicplayer = new MusicPlayer("Ignition");
 		
 		pool.runTask(musicplayer);
-//		Window.setCallbacks();
 
-//			pool.runTask(new Test1());
-//			pool.runTask(new test2());
-//			pool.join();
 		if (glfwInit() != true) {
 			System.err.println("glfw failed to initialize !");// if glfw is working
 			System.exit(1);
 		}
 
 		Window window = new Window();
-		window.setSize(640, 480);
-	//	window.setFullscreen(true);
+	
 		window.createWindow("game");
 
 		GL.createCapabilities();// creates a context,image that is on graphics card that opengl draws on
@@ -52,7 +58,7 @@ public class Main {
 		//glEnable(GL_TEXTURE_2D);
 
 		TileRenderer tiles = new TileRenderer();
-		Entity.IntiAsset();// initialise entity asset
+		Entity.initialiseEntity();// initialise entity asset
 
 
 		
@@ -76,8 +82,9 @@ public class Main {
 		
 		
 		
-//		world.setTile(Tile.tile2, 4, 4);
-		
+	//world.setTile(Tile.tile2, 4, 4);
+	
+	
 		
 		
 		
@@ -98,6 +105,10 @@ public class Main {
 			unprocessed += passed;
 			frame_time += passed;
 			time = time_2;
+			
+			
+			
+			
 			if (window.getInput().isKeyDown(GLFW_KEY_ESCAPE)) {
 		
 				pool.close();
@@ -105,16 +116,22 @@ public class Main {
 			
 				
 			}
+			
+			
+			
 			while (unprocessed >= frame_cap) {// all update code
 				unprocessed -= frame_cap;
 				can_render = true;
 
-				
 
 				world.update((float) frame_cap, window, camera);//updates everything in the world and entities
 				world.correctCamera(camera, window);
 
 				window.update();
+				
+				
+				
+				
 				if (frame_time >= 1.0) {
 					frame_time = 0;
 					System.out.println("Fps:" + frames);
@@ -127,12 +144,7 @@ public class Main {
 
 				glClear(GL_COLOR_BUFFER_BIT);// clears context
 
-//				
-//				shader.bind();
-//				shader.setUniform("sampler", 0);
-//				shader.setUniform("projection", camera.getprojection().mul(target));//camera projection with the position multiplied with what were using now
-				// model.render();
-				// tex.bind(0);
+
 
 				world.render(tiles, shader, camera, window);
 				// player.render(shader, camera, world);
@@ -141,7 +153,7 @@ public class Main {
 			}
 
 		}
-		Entity.DelAsset();// destroys entity asset
+		Entity.deleteEntity();// destroys entity asset
 		glfwTerminate();// cleans up data
 
 	}

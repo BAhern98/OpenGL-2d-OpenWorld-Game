@@ -13,22 +13,22 @@ public class Input {
 		// TODO Auto-generated constructor stub
 		this.window = window;//get window long 
 		this.keys = new boolean[GLFW_KEY_LAST];
-		for (int i = 0; i < GLFW_KEY_LAST; i++)
-			keys[i] = false;
+		for (int i = 0; i < GLFW_KEY_LAST; i++)// loops through all 348 keys
+			keys[i] = false;// makes all keys = to false
 	}
 
 	public boolean isKeyDown(int key) {//
-		return glfwGetKey(window, key) == 1;//return boolean, if 1 = true
+		return glfwGetKey(window, key) == 1;//return boolean, if 1 == true
 	}
 
 
 
 	public boolean isMouseButtonDown(int button) {
-		return glfwGetMouseButton(window, button) == 1;
+		return glfwGetMouseButton(window, button) == 1;//return boolean, if 1 == true
 	}
 
 	public void update() {
-		for (int i = 32; i < GLFW.GLFW_KEY_LAST; i++) 
+		for (int i = 32; i < GLFW.GLFW_KEY_LAST; i++) // loops through all 348 keys
 			  keys[i] = isKeyDown(i);
 	}
 

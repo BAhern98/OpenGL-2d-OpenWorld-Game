@@ -20,9 +20,9 @@ public class Animations {
 	
 	public Animations(int amount, int fps, String filename) {
 	// TODO Auto-generated constructor stub
-	//	this.pointer = 0;
-//		this.currentTime = 0;
-//		this.elapsedTime = 0;
+		this.pointer = 0;
+		this.currentTime = 0;
+		this.elapsedTime = 0;
 		this.lastTime = World.getTime();
 		this.fps = 1.0/(double)fps;
 		
@@ -46,7 +46,7 @@ public class Animations {
 		}
 		
 		if(pointer >= frames.length)
-			pointer = 0;//0vkeeps array inbounds
+			pointer = 0;// keeps array inbounds
 		
 		this.lastTime = currentTime;
 		
