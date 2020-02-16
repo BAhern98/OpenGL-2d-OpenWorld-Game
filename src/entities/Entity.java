@@ -27,8 +27,14 @@ public abstract  class Entity {
 
 	// private Texture texture ;
 	protected Transform transform;
+	
+	
+	
 	protected Animations[] animations;//array for player animations
-	private int use_animation;
+	private int useAnimation;// which frame to start at
+	
+	
+	
 	protected boolean active = true;
 	protected float x, y;
 	protected int width, height;
@@ -42,12 +48,14 @@ public abstract  class Entity {
 		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
 	}
 	public Entity(int maxAnimations, Transform transform) {
-		health = default_health;
+		
 		this.animations= new Animations[maxAnimations];
-		this.transform = transform;
-		this.use_animation = 0;
+	
+		this.useAnimation = 0;
 
+		this.transform = transform;
 		boundingBox = new AABB(new Vector2f(transform.position.x, transform.position.y), new Vector2f(transform.scale.x, transform.scale.y));//scales bounding box
+		health = default_health;
 	}
 	public int getHealth() {
 		return health;
@@ -61,12 +69,12 @@ public abstract  class Entity {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	protected void setAnimation(int index, Animations animation) {//sets animation
+	public void setAnimation(int index, Animations animation) {//sets animation
 		animations[index] = animation;
 	}
 	
 	public void useAnimation(int index) {//select animation
-		this.use_animation = index;
+		this.useAnimation = index;
 	}
 
 	public void move(Vector2f direction) {//tells if player has moved
@@ -170,7 +178,7 @@ public abstract  class Entity {
 		shader.bind();
 		shader.setUniform("sampler", 0);
 		shader.setUniform("projection", transform.getProjection(target));
-		animations[use_animation].bind(0);//binds texture at animation
+		animations[useAnimation].bind(0);//binds texture at animation
 		model.render();
 	}
 

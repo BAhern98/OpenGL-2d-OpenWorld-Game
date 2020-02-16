@@ -21,16 +21,16 @@ public class Player extends Entity {
 //	// private Texture texture ;
 //	protected Transform transform;
 //	protected Animations texture;
-	public static final int ANIM_IDLE = 0;
-	public static final int  ANIM_WALK = 1;
-public static final int ANIM_SIZE = 2;
+	public static final int IDLE = 0;
+	public static final int  RUN = 1;
+public static final int ANIM_SIZE = 6;
 
 
 	public Player(Transform transform) {
-		super(ANIM_SIZE,transform);
+		super(1,transform);
 		//number of images, fps, file
-		setAnimation(ANIM_IDLE, new Animations(4,2,"player/idle"));//player standing 
-		setAnimation(ANIM_WALK, new Animations(4,4,"player/run"));//player walking 
+		setAnimation(IDLE, new Animations(4,2,"player/idle"));//player standing 
+		setAnimation(RUN, new Animations(4,4,"player/run"));//player walking 
 	}
 	
 	@Override
@@ -64,9 +64,9 @@ public static final int ANIM_SIZE = 2;
 		//checkAttacks(window);
 		move(movement);
 		if(movement.x != 0 || movement.y !=0)
-			useAnimation(ANIM_WALK);
+			useAnimation(RUN);
 		else
-			useAnimation(ANIM_IDLE);
+			useAnimation(IDLE);
 
 		camera.getPosition().lerp(transform.position.mul(-world.getScale(), new Vector3f()), 0.1f);//follows the player
 		
