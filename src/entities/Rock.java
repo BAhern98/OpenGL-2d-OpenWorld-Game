@@ -7,6 +7,7 @@ import project.Window;
 import project.World;
 
 public class Rock extends Entity{
+	
 	public static final int IDLE = 0;
 	public static final int SIZE = 1;
 	public Rock(Transform transform) {
@@ -26,10 +27,6 @@ public class Rock extends Entity{
 	public void destroy() {
 
 	}
-//	public void t() {
-//		Transform t = new Transform();
-//		t.pos.x = 0;
-//		t.pos.y = -4;
-//	}
+
 
 }

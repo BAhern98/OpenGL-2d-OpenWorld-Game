@@ -46,7 +46,7 @@ public class Shader {
 		glAttachShader(program, fragmentShader);//attaches shader to program
 		
 		glBindAttribLocation(program, 0, "vertices");//bind vertices to 0, send to attribute 0
-		glBindAttribLocation(program, 1, "textures");
+		glBindAttribLocation(program, 1, "textures");//bind vertices to 1, send to attribute 1
 		
 		glLinkProgram(program);//link shader
 		

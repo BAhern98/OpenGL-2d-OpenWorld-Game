@@ -24,7 +24,6 @@ public class Window {
 		
 		window = glfwCreateWindow(width, height, title,glfwGetPrimaryMonitor() ,  0);
 		
-		
 		if (window == 0)
 			throw new IllegalStateException("Window was not created");
 
@@ -69,9 +68,7 @@ public class Window {
 		return height;
 	}
 
-//	public boolean isFullscreen() {
-//		return fullscreen;
-//	}
+
 
 	public long getWindow() {
 		return window;

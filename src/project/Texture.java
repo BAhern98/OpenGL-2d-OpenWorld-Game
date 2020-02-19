@@ -25,13 +25,13 @@ public class Texture {
 			width= bi.getWidth();
 			height = bi.getHeight();
 			
-			int[] pixels_raw = new int[width * height * 4];
-			pixels_raw = bi.getRGB(0, 0, width, height, null, 0, width);
+			int[] rawPixels = new int[width * height * 4];
+			rawPixels = bi.getRGB(0, 0, width, height, null, 0, width);
 			ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
 			
 			for(int i = 0; i< width ; i++) {
 				for(int j = 0; j<height; j++) {
-					int pixel = pixels_raw[i*width+j];
+					int pixel = rawPixels[i*width+j];
 					pixels.put((byte)((pixel >> 16) & 0xFF));//red
 					pixels.put((byte)((pixel >> 8) & 0xFF));//green
 

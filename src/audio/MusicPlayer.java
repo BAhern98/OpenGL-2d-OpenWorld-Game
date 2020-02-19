@@ -13,6 +13,8 @@ import javax.sound.sampled.FloatControl;
 
 public class MusicPlayer implements Runnable{
 	private ArrayList<String> musicFiles;
+	
+	
 	private int SongIndex;
 
 	public MusicPlayer(String file) {
