@@ -1,5 +1,6 @@
 package entities;
 
+
 import java.awt.Rectangle;
 
 import org.joml.Matrix4f;
@@ -35,7 +36,10 @@ public abstract  class Entity {
 	
 	
 	
-	protected boolean active = true;
+	public boolean active = true;
+	
+	
+	
 	protected float x, y;
 	protected int width, height;
 	protected Rectangle bounds;
@@ -45,9 +49,20 @@ public abstract  class Entity {
 	// changed to protected so any child class will have access to that
 	//
 	public Rectangle getCollisionBounds(float xOffset, float yOffset){
+		
 		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
 	}
-	public Entity(int maxAnimations, Transform transform) {
+	public Entity(int maxAnimations, Transform transform, float x, float y, int width, int height) {
+		bounds = new Rectangle(0, 0, width, height);
+//		bounds.x = 16;
+//		bounds.y = 16;
+//		bounds.width = 32;
+//		bounds.height = 32;
+//		
+		this.x=x;
+		this.y=y;
+		this.width=width;
+		this.height= height;
 		
 		this.animations= new Animations[maxAnimations];
 	
@@ -86,12 +101,8 @@ public abstract  class Entity {
 
 	public void collideWithTiles(World world) {// put in new method because we want the world to handle every entity
 
-		AABB[] boxes = new AABB[25];//sorounds emtity with 25 bounding boxes
-//
-		//
-		//  sets 5 * 5 bounding boxes around the entity
-		//
-		
+		AABB[] boxes = new AABB[25];//surrounds entity with 5*5 bounding boxes
+
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				boxes[i + j * 5] = world.getTileBoundingBox(
@@ -101,8 +112,7 @@ public abstract  class Entity {
 				// gets everything around player for
 				// bounding boxes
 			}
-		}
-		
+		}	
 		AABB box = null;
 		//
 		// getting closest box
@@ -111,7 +121,6 @@ public abstract  class Entity {
 			if (boxes[i] != null) {
 				if (box == null)
 					box = boxes[i];
-
 				Vector2f length1 = box.getCenter().sub(transform.position.x, transform.position.y, new Vector2f());
 				Vector2f length2 = boxes[i].getCenter().sub(transform.position.x, transform.position.y, new Vector2f());
 
@@ -119,19 +128,17 @@ public abstract  class Entity {
 					box = boxes[i];
 				}
 			}
-
 		}
-
 		//
 		// colliding with it
 		//
-
 		if (box != null) {
 			Collision data = boundingBox.getCollision(box);
 			if (data.isIntersecting) {
 				boundingBox.correctPosition(box, data);
 				transform.position.set(boundingBox.getCenter(), 0);
 			}
+			
 
 			//
 			// next closest box
@@ -161,13 +168,47 @@ public abstract  class Entity {
 		}
 	}
 	
-	public void hurt(int amount) {
-		health -=amount;
-		if(health<=0) {
-			active = false;
-			destroy();
-		}
-	}
+
+
+//public void Attack(World world) {// put in new method because we want the world to handle every entity
+//
+//	AABB[] boxes = new AABB[25];//surrounds entity with 5*5 bounding boxes
+//
+//	for (int i = 0; i < 5; i++) {
+//		for (int j = 0; j < 5; j++) {
+//			boxes[i + j * 5] = world.getTileBoundingBox(
+//
+//					(int) (((transform.position.x / 2) + 0.5) - (5 / 2)) + i,
+//					(int) (((-transform.position.y / 2) + 0.5) - (5 / 2)) + j);
+//			// gets everything around player for
+//			// bounding boxes
+//		}
+//	}	
+//	AABB box = null;
+//	//
+//	// getting closest box
+//	//
+//	for (int i = 0; i < boxes.length; i++) {
+//		if (boxes[i] != null) {
+//			if (box == null)
+//				box = boxes[i];
+//			Vector2f length1 = box.getCenter().sub(transform.position.x, transform.position.y, new Vector2f());
+//			Vector2f length2 = boxes[i].getCenter().sub(transform.position.x, transform.position.y, new Vector2f());
+//
+//			if (length1.lengthSquared() > length2.lengthSquared()) {// used squared to save cpu power
+//				box = boxes[i];
+//				
+//			}
+//		}
+//	}
+//	//
+//	// colliding with it
+//	//
+//	if (box != null) {
+//	
+//		}
+//		}
+	
 
 	public abstract void destroy();
 	
@@ -215,6 +256,7 @@ public abstract  class Entity {
 
 		model = new Model(vertices, texture, indices);
 	}
+	
 
 	public void collideWithEntity(Entity entity) {// method for coliding with just entites
 		Collision collision = boundingBox.getCollision(entity.boundingBox);// get all data so we can colide with the entity using aabb
@@ -230,7 +272,37 @@ public abstract  class Entity {
 			entity.boundingBox.correctPosition(boundingBox, collision);//corect entities bounding box with our bounding box
 			entity.transform.position.set(entity.boundingBox.getCenter().x, entity.boundingBox.getCenter().y, 0);//set its transformation position
 		
+		//collision.h
 		}
-	} 
+	}
+//		public void collideWithEntityDecrementHealth(Entity entity) {// method for coliding with just entites
+//			Collision collision = boundingBox.getCollision(entity.boundingBox);// get all data so we can colide with the entity using aabb
+//																					
+//			if (collision.isIntersecting) { // test if it is intersecting
+//				collision.distance.x/=10;//leaves smaller gap when moving entity objects
+//				collision.distance.y/=10;
+//				//return entity.active(false);
+//	 			
+//				boundingBox.correctPosition(entity.boundingBox, collision);// correct the position
+//				transform.position.set(boundingBox.getCenter().x, boundingBox.getCenter().y, 0);// setting the transform
+//			
+//				entity.boundingBox.correctPosition(boundingBox, collision);//corect entities bounding box with our bounding box
+//				entity.transform.position.set(entity.boundingBox.getCenter().x, entity.boundingBox.getCenter().y, 0);//set its transformation position
+//			entity.hurt();
+//			//collision.h
+//			}
+//	} 
+
+	public void hurt(int amt) {
+		health -= amt;
+		if(health<= 0) {
+			active = false;
+			destroy();
+		
+		}
+		
+		
+	}
+	
 	
 }

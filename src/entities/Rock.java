@@ -12,7 +12,7 @@ public class Rock extends Entity{
 	public static final int SIZE = 1;
 	public Rock(Transform transform) {
 		// TODO Auto-generated constructor stub
-		super(SIZE,transform);
+		super(SIZE,transform, 22, 41, 19, 19);
 		setAnimation(IDLE, new Animations(1,1,"worldEntities/rock"));//player standing 
 		useAnimation(IDLE);
 	

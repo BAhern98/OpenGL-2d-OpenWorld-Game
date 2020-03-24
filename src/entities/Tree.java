@@ -11,7 +11,7 @@ public class Tree extends Entity{
 	public static final int TREE_SIZE = 1;
 	public Tree(Transform transform) {
 		// TODO Auto-generated constructor stub
-		super(TREE_SIZE,transform);
+		super(TREE_SIZE,transform,  22, 41, 19, 19);
 		setAnimation(TREE_IDLE, new Animations(2,1,"worldEntities/tree"));//player standing 
 		useAnimation(TREE_IDLE);
 	}

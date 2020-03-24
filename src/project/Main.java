@@ -1,5 +1,5 @@
 package project;
-
+import javax.swing.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -23,13 +23,16 @@ import javazoom.jl.player.Player;
 import world.Tile;
 import world.TileRenderer;
 
-public class Main {
+public class Main{
 
 	
 	public Main() {
+	
 		
 		
-
+		
+//			Menu menu = new Menu();
+//			add(menu);
 		
 		
 		

@@ -2,13 +2,15 @@ package project;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import javax.swing.*;
+
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
-public class Window {
+public class Window extends JPanel {
 	private long window;
 	private int width, height;
-
+	public boolean fullscreen;
 	
 
 	private Input input;
@@ -18,14 +20,25 @@ public class Window {
 		setSize(640, 480);
 		//setFullscreen(false);
 		// TODO Auto-generated constructor stub
+//		JPanel panel = new JPanel();
+//		panel.setBackground(java.awt.Color.DARK_GRAY);
+//		CustomButton button = new CustomButton("Play Game");
+//		panel.add(button);
+//		add(panel);
+		
 	}
 
 	public void createWindow(String title) {
 		
-		window = glfwCreateWindow(width, height, title,glfwGetPrimaryMonitor() ,  0);
+		window = glfwCreateWindow(width, height, title,fullscreen ? glfwGetPrimaryMonitor():0 ,  0);
 		
 		if (window == 0)
 			throw new IllegalStateException("Window was not created");
+		
+		if (!fullscreen) {
+			GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
+			glfwSetWindowPos(window, (vid.width() - width) / 2, (vid.height() - height) / 2);
+		}
 
 		glfwShowWindow(window);//displays wndow after being created
 
