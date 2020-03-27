@@ -202,12 +202,16 @@ public class World {
 		for (Entity entity : entities) {// itaarate through all the entities in list of entities
 		entity.render(shader, camera, this);// render each entity
 		if (!entity.isActive()) {// checks if entity attribute is active
-			entitiesToRemove.add(entity);// removes entity from list
+			entitiesToRemove.add(entity);// adds entity to new list
 		}
 
 	}
-		entities.removeAll(entitiesToRemove);
+		entities.removeAll(entitiesToRemove);//removes all entities from that list
 	}
+	
+	
+	
+	
 //		else if (state == State.Menu) {
 //	
 //			

@@ -49,32 +49,33 @@ public class Player extends Entity {
 		if (window.getInput().isKeyDown(GLFW.GLFW_KEY_S))
 			movement.add(0, -10 * delta);// move character 10 units fr every frame
 
-		Rectangle cb = getCollisionBounds(0, 0);
-		Rectangle ar = new Rectangle();
-		int arSize = 2;
-		ar.width = arSize;
-		ar.height = arSize;
+		Rectangle collisionBounds = getCollisionBounds(0, 0);
+		Rectangle attackRectangle = new Rectangle();
+		int attackRectangleSize = 20;
+		attackRectangle.width = attackRectangleSize;
+		attackRectangle.height = attackRectangleSize;
+
 
 		if (window.getInput().isKeyPressed(GLFW.GLFW_KEY_UP))
-			ar.x = cb.x + cb.width / 2 - arSize / 2;
-		ar.y = cb.y - arSize;
+			attackRectangle.x = collisionBounds.x + collisionBounds.width / 2 - attackRectangleSize / 2;
+		attackRectangle.y = collisionBounds.y - attackRectangleSize;
 
 		if (window.getInput().isKeyPressed(GLFW.GLFW_KEY_DOWN))
-			ar.x = cb.x + cb.width / 2 - arSize / 2;
-		ar.y = cb.y + cb.height;
+			attackRectangle.x = collisionBounds.x + collisionBounds.width / 2 - attackRectangleSize / 2;
+		attackRectangle.y = collisionBounds.y + collisionBounds.height;
 
 		if (window.getInput().isKeyPressed(GLFW.GLFW_KEY_LEFT))
-			ar.x = cb.x - arSize;
-		ar.y = cb.y + cb.height / 2 - arSize / 2;
+			attackRectangle.x = collisionBounds.x - attackRectangleSize;
+		attackRectangle.y = collisionBounds.y + collisionBounds.height / 2 - attackRectangleSize / 2;
 		if (window.getInput().isKeyPressed(GLFW.GLFW_KEY_RIGHT))
-			ar.x = cb.x + cb.width;
-		ar.y = cb.y + cb.height / 2 - arSize / 2;
+			attackRectangle.x = collisionBounds.x + collisionBounds.width;
+		attackRectangle.y = collisionBounds.y + collisionBounds.height / 2 - attackRectangleSize / 2;
 
 		for (Entity entity : World.entities) {// itaarate through all the entities in list of entities
 			if (entity.equals(this))
 				continue;
-			if (entity.getCollisionBounds(0, 0).intersects(ar)) {
-				entity.hurt(10);
+			if (entity.getCollisionBounds(0, 0).intersects(attackRectangle)) {
+				entity.hurt(2);
 				return;
 			}
 
@@ -99,7 +100,7 @@ public class Player extends Entity {
 
 	@Override
 	public void destroy() {
-		System.out.println("you suck");
+		System.out.println("Game Over");
 	}
 
 //	private void checkAttack() {

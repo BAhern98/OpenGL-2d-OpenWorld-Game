@@ -20,8 +20,7 @@ import project.World;
 
 public abstract  class Entity {
 	
-	protected int health; 
-	public static final int default_health = 10;
+	
 	
 	private static Model model;
 	protected AABB boundingBox;
@@ -48,10 +47,9 @@ public abstract  class Entity {
 	//
 	// changed to protected so any child class will have access to that
 	//
-	public Rectangle getCollisionBounds(float xOffset, float yOffset){
-		
-		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
-	}
+	protected int health; 
+	public static final int default_health = 10;
+	
 	public Entity(int maxAnimations, Transform transform, float x, float y, int width, int height) {
 		bounds = new Rectangle(0, 0, width, height);
 //		bounds.x = 16;
@@ -90,6 +88,10 @@ public abstract  class Entity {
 	
 	public void useAnimation(int index) {//select animation
 		this.useAnimation = index;
+	}
+public Rectangle getCollisionBounds(float xOffset, float yOffset){
+		
+		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
 	}
 
 	public void move(Vector2f direction) {//tells if player has moved
@@ -292,9 +294,11 @@ public abstract  class Entity {
 //			//collision.h
 //			}
 //	} 
+	
+	
 
-	public void hurt(int amt) {
-		health -= amt;
+	public void hurt(int damage) {
+		health -= damage;
 		if(health<= 0) {
 			active = false;
 			destroy();
