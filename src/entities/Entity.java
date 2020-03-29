@@ -39,7 +39,7 @@ public abstract  class Entity {
 	
 	
 	
-	protected float x, y;
+	protected int x, y;
 	protected int width, height;
 	protected Rectangle bounds;
 
@@ -50,13 +50,11 @@ public abstract  class Entity {
 	protected int health; 
 	public static final int default_health = 10;
 	
-	public Entity(int maxAnimations, Transform transform, float x, float y, int width, int height) {
+	public Entity(int maxAnimations, Transform transform, int x, int y, int width, int height) {
+		
+		
 		bounds = new Rectangle(0, 0, width, height);
-//		bounds.x = 16;
-//		bounds.y = 16;
-//		bounds.width = 32;
-//		bounds.height = 32;
-//		
+		
 		this.x=x;
 		this.y=y;
 		this.width=width;
@@ -89,7 +87,7 @@ public abstract  class Entity {
 	public void useAnimation(int index) {//select animation
 		this.useAnimation = index;
 	}
-public Rectangle getCollisionBounds(float xOffset, float yOffset){
+public Rectangle getCollisionBounds(int xOffset, int yOffset){
 		
 		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
 	}

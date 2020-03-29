@@ -156,6 +156,8 @@ public class Main{
 			}
 
 		}
+
+		pool.close();
 		Entity.deleteEntity();// destroys entity asset
 		glfwTerminate();// cleans up data
 

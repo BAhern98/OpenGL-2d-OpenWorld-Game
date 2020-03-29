@@ -74,8 +74,8 @@ public class Player extends Entity {
 		for (Entity entity : World.entities) {// itaarate through all the entities in list of entities
 			if (entity.equals(this))
 				continue;
-			if (entity.getCollisionBounds(0, 0).intersects(attackRectangle)) {
-				entity.hurt(2);
+			if (entity.getCollisionBounds(0, 0).intersects(attackRectangle)) {// checks if the attack hits entity
+				entity.hurt(2);//damages entity
 				return;
 			}
 
